@@ -1,0 +1,212 @@
+/* ==========================================================================
+   Shared Header Styles for Profile Pages (Crops & Equipment)
+   ========================================================================== */
+.page-header {
+    background-color: var(--primary-dark);
+    background-blend-mode: multiply;
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+    margin-bottom: 2rem;
+    background-position: center;
+    background-size: cover;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0.9;
+}
+
+/* ==========================================================================
+   Dynamic Filter Navigation (Used in crops.html)
+   ========================================================================== */
+.filter-container {
+    max-width: 1200px;
+    margin: 0 auto 2rem auto;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.filter-btn {
+    background-color: var(--bg-surface);
+    color: var(--text-main);
+    border: 2px solid var(--border-color);
+    padding: 8px 20px;
+    margin: 5px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* ==========================================================================
+   CSS Grid Configurations (Responsive Layouts)
+   ========================================================================== */
+/* Crops Grid uses slightly smaller cards to fit more on screen */
+.crop-grid {
+    max-width: 1200px;
+    margin: 0 auto 4rem auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+/* Equipment Grid uses slightly wider cards for technical lists */
+.equipment-grid {
+    max-width: 1200px;
+    margin: 0 auto 4rem auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+}
+
+/* ==========================================================================
+   Universal Card Profile Styling
+   ========================================================================== */
+.crop-card, .equipment-card {
+    background-color: var(--bg-surface);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.crop-card:hover, .equipment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.15);
+}
+
+/* Image treatments */
+.crop-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.equipment-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 4px solid var(--primary-color);
+}
+
+/* ==========================================================================
+   Card Content & Typography
+   ========================================================================== */
+.crop-info, .equipment-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.crop-category {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.crop-title, .equipment-content h2 {
+    font-size: 1.4rem;
+    color: var(--text-main);
+    margin-bottom: 10px;
+}
+
+.crop-desc, .equipment-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    flex-grow: 1;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   Interactive Elements inside Cards
+   ========================================================================== */
+/* Learn More Button for Crops */
+.btn-learn {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background-color: var(--bg-primary);
+    color: var(--primary-dark);
+    border: 1px solid var(--primary-color);
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-learn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Equipment Uses List Box */
+.uses-section {
+    background-color: var(--bg-primary);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: auto;
+    border: 1px dashed var(--border-color);
+}
+
+.uses-section h4 {
+    color: var(--primary-dark);
+    margin-bottom: 8px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.uses-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.uses-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 6px;
+    color: var(--text-main);
+    font-size: 0.9rem;
+}
+
+.uses-list li::before {
+    content: '⚙️';
+    position: absolute;
+    left: 0;
+    top: 2px;
+    font-size: 0.8rem;
+}
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+.hidden {
+    display: none !important;
+}

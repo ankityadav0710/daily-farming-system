@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fertilizer Guide & NPK Calculator - AgroSystem</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .page-header {
+            background: linear-gradient(rgba(230, 126, 34, 0.85), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto 4rem auto;
+            padding: 0 20px;
+        }
+
+        /* NPK Explanation Grid */
+        .npk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .npk-card {
+            background-color: var(--bg-surface);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .npk-card.nitrogen { border-color: #3498db; }
+        .npk-card.phosphorus { border-color: #e74c3c; }
+        .npk-card.potassium { border-color: #f1c40f; }
+
+        .npk-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .npk-card p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 4rem;
+        }
+
+        .calc-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .calc-header h2 {
+            color: var(--primary-dark);
+            font-size: 2rem;
+        }
+
+        .calc-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 250px;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        .input-group select, .input-group input {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+
+        .btn-calc {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            align-self: flex-end;
+        }
+
+        .btn-calc:hover {
+            background-color: #d35400;
+        }
+
+        /* Results Display */
+        .calc-results {
+            display: none; /* Hidden by default */
+            background-color: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px dashed var(--border-color);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .result-card {
+            background-color: var(--bg-surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .result-card h4 { color: var(--text-muted); margin-bottom: 10px; }
+        .result-card h2 { color: var(--text-main); font-size: 2rem; }
+        .result-card span { font-size: 0.9rem; color: var(--text-muted); }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">🌱 AgroSystem</a>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="crops.html">Crops</a></li>
+                <li><a href="area-statistics.html">Area Stats</a></li>
+                <li><a href="farmingtips.html">Tips</a></li>
+                <li><a href="weather.html">Weather</a></li>
+                <li><a href="fertilizer.html" class="active">Fertilizer Guide</a></li>
+                <li><a href="schemes.html">Schemes</a></li>
+                <li><button class="btn-theme" id="themeToggle">🌙 Dark Mode</button></li>
+                
+                <!-- Navbar Translate Widget -->
+                <li style="display: flex; align-items: center;">
+                    <div id="google_translate_element"></div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <h1>Fertilizer Application Guide</h1>
+        <p>Understand crop nutrition and calculate the exact amount of commercial fertilizer required for your farm.</p>
+    </section>
+
+    <div class="content-container">
+        
+        <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text-main);">Understanding NPK</h2>
+        <div class="npk-grid">
+            <div class="npk-card nitrogen">
+                <h3 style="color: #3498db;"><span>N</span> - Nitrogen</h3>
+                <p><strong>Role:</strong> Responsible for the growth of leaves on the plant.</p>
+                <p><strong>Deficiency Symptoms:</strong> Yellowing of older leaves, stunted plant growth.</p>
+                <p><strong>Common Source:</strong> Urea (46% N)</p>
+            </div>
+            <div class="npk-card phosphorus">
+                <h3 style="color: #e74c3c;"><span>P</span> - Phosphorus</h3>
+                <p><strong>Role:</strong> Crucial for root development and flower/fruit production.</p>
+                <p><strong>Deficiency Symptoms:</strong> Dark green or purplish leaves, poor root system.</p>
+                <p><strong>Common Source:</strong> DAP (18% N, 46% P)</p>
+            </div>
+            <div class="npk-card potassium">
+                <h3 style="color: #f1c40f;"><span>K</span> - Potassium</h3>
+                <p><strong>Role:</strong> Helps with the overall functions of the plant to perform correctly (disease resistance).</p>
+                <p><strong>Deficiency Symptoms:</strong> Brown scorching and curling of leaf tips.</p>
+                <p><strong>Common Source:</strong> MOP (60% K)</p>
+            </div>
+        </div>
+
+        <section class="calculator-section">
+            <div class="calc-header">
+                <h2>🧮 Interactive Fertilizer Calculator</h2>
+                <p>Select your crop and farm size to calculate required Urea, DAP, and MOP.</p>
+            </div>
+
+            <div class="calc-form">
+                <div class="input-group">
+                    <label for="cropSelect">Select Crop</label>
+                    <select id="cropSelect">
+                        <option value="wheat">Wheat</option>
+                        <option value="rice">Rice (Paddy)</option>
+                        <option value="sugarcane">Sugarcane</option>
+                        <option value="maize">Maize</option>
+                        <option value="potato">Potato</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="farmSize">Farm Size (in Acres)</label>
+                    <input type="number" id="farmSize" placeholder="E.g., 5" min="0.1" step="0.1" value="1">
+                </div>
+                <button class="btn-calc" id="calculateBtn">Calculate Requirement</button>
+            </div>
+
+            <div class="calc-results" id="resultsPanel">
+                <h3 style="text-align: center; color: var(--text-main);">Estimated Commercial Fertilizer Required</h3>
+                <p style="text-align: center; color: var(--text-muted); margin-bottom: 1rem;">Based on standard NPK recommendations for <strong id="lblCrop">Wheat</strong> on <strong id="lblSize">1</strong> Acres.</p>
+                
+                <div class="results-grid">
+                    <div class="result-card">
+                        <h4>Urea (Nitrogen)</h4>
+                        <h2 id="resUrea">0 <span style="font-size: 1rem;">kg</span></h2>
+                        <span>(~<span id="bagUrea">0</span> Bags of 45kg)</span>
+                    </div>
+                    <div class="result-card">
+                        <h4>DAP (Phosphorus)</h4>
+                        <h2 id="resDAP">0 <span style="font-size: 1rem;">kg</span></h2>
+                        <span>(~<span id="bagDAP">0</span> Bags of 50kg)</span>
+                    </div>
+                    <div class="result-card">
+                        <h4>MOP (Potassium)</h4>
+                        <h2 id="resMOP">0 <span style="font-size: 1rem;">kg</span></h2>
+                        <span>(~<span id="bagMOP">0</span> Bags of 50kg)</span>
+                    </div>
+                </div>
+                <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 20px;">*Note: DAP provides both Phosphorus and Nitrogen. The Urea calculation automatically deducts the Nitrogen already provided by DAP. Always conduct a soil test for precise measurements.</p>
+            </div>
+        </section>
+
+        <h2 style="text-align: center; margin-bottom: 2rem; color: var(--text-main);">Safety Guidelines for Application</h2>
+        <div style="background-color: var(--bg-surface); padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color);">
+            <ul style="line-height: 1.8; color: var(--text-muted); padding-left: 20px;">
+                <li><strong>Timing:</strong> Apply fertilizers during early morning or late evening. Avoid application during heavy rains to prevent runoff.</li>
+                <li><strong>Placement:</strong> For basal doses (DAP/MOP), place the fertilizer 2-3 inches below the seed. Do not let seeds touch chemical fertilizers directly.</li>
+                <li><strong>Moisture:</strong> Ensure adequate soil moisture before applying Urea to prevent volatilization (nitrogen escaping as ammonia gas).</li>
+                <li><strong>Protective Gear:</strong> Always wear gloves and a mask when handling chemical fertilizers to prevent skin irritation and inhalation of dust.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- VIROXA Brand Footer -->
+    <footer>
+        <p>&copy; 2026 Daily Farming Management System. Designed by <span class="designer-highlight">"VIROXA"</span></p>
+    </footer>
+
+    <!-- Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', 
+                includedLanguages: 'hi,mr,pa,gu,bn,te,ta,kn,en', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="js/script.js"></script>
+    
+    <script>
+        // Standard NPK Requirements per Acre (in kg of pure N, P, K)
+        // These are approximate values for demonstration purposes
+        const npkData = {
+            wheat: { n: 48, p: 24, k: 16 },
+            rice: { n: 40, p: 24, k: 16 },
+            sugarcane: { n: 100, p: 40, k: 40 },
+            maize: { n: 48, p: 24, k: 16 },
+            potato: { n: 60, p: 40, k: 40 }
+        };
+
+        const calculateBtn = document.getElementById('calculateBtn');
+        const resultsPanel = document.getElementById('resultsPanel');
+
+        calculateBtn.addEventListener('click', () => {
+            const cropKey = document.getElementById('cropSelect').value;
+            const cropName = document.getElementById('cropSelect').options[document.getElementById('cropSelect').selectedIndex].text;
+            const acres = parseFloat(document.getElementById('farmSize').value);
+
+            if (isNaN(acres) || acres <= 0) {
+                alert("Please enter a valid farm size.");
+                return;
+            }
+
+            // 1. Get Base Requirement for total acres
+            const reqN = npkData[cropKey].n * acres;
+            const reqP = npkData[cropKey].p * acres;
+            const reqK = npkData[cropKey].k * acres;
+
+            // 2. Fertilizer Conversion Math (Real Ag-Science Logic)
+            // MOP (Muriate of Potash) is 60% K
+            const kgMOP = reqK / 0.60;
+
+            // DAP (Diammonium Phosphate) is 46% P and 18% N
+            const kgDAP = reqP / 0.46;
+            
+            // DAP also provides Nitrogen. Calculate how much N is already covered by the DAP applied.
+            const nFromDAP = kgDAP * 0.18;
+            
+            // Calculate remaining N needed
+            let remainingN = reqN - nFromDAP;
+            if (remainingN < 0) remainingN = 0;
+
+            // Urea is 46% N
+            const kgUrea = remainingN / 0.46;
+
+            // 3. Update DOM
+            document.getElementById('lblCrop').textContent = cropName;
+            document.getElementById('lblSize').textContent = acres;
+
+            document.getElementById('resUrea').innerHTML = `${Math.round(kgUrea)} <span style="font-size: 1rem;">kg</span>`;
+            document.getElementById('resDAP').innerHTML = `${Math.round(kgDAP)} <span style="font-size: 1rem;">kg</span>`;
+            document.getElementById('resMOP').innerHTML = `${Math.round(kgMOP)} <span style="font-size: 1rem;">kg</span>`;
+
+            // Calculate Bags (Urea is usually 45kg/bag, DAP/MOP is 50kg/bag in India)
+            document.getElementById('bagUrea').textContent = (kgUrea / 45).toFixed(1);
+            document.getElementById('bagDAP').textContent = (kgDAP / 50).toFixed(1);
+            document.getElementById('bagMOP').textContent = (kgMOP / 50).toFixed(1);
+
+            // Show Panel
+            resultsPanel.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

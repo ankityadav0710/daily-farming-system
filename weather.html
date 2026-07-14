@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Weather - Daily Farming Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .page-header {
+            background: linear-gradient(rgba(41, 128, 185, 0.8), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1561484930-998b6a7b22e8?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .weather-container {
+            max-width: 1000px;
+            margin: 0 auto 4rem auto;
+            padding: 0 20px;
+        }
+
+        /* Search Section */
+        .weather-search {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        .weather-search input {
+            padding: 12px 20px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            font-size: 1rem;
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+        }
+
+        .weather-search button {
+            padding: 12px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .weather-search button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Current Weather Card */
+        .current-weather {
+            background-color: var(--bg-surface);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .city-name {
+            font-size: 2rem;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .date-text {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .temp-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .temp-display img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .temp-value {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+
+        .weather-desc {
+            font-size: 1.2rem;
+            text-transform: capitalize;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+
+        /* Weather Details Grid */
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+        }
+
+        .detail-box {
+            background-color: var(--bg-primary);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .detail-box p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .detail-box h4 {
+            color: var(--text-main);
+            font-size: 1.2rem;
+        }
+
+        /* API Status Badge */
+        .api-status {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+        .status-live { color: #27ae60; }
+        .status-mock { color: #e67e22; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">🌱 AgroSystem</a>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="crops.html">Crops</a></li>
+                <li><a href="area-statistics.html">Area Stats</a></li>
+                <li><a href="farmingtips.html">Tips</a></li>
+                <li><a href="weather.html" class="active">Weather</a></li>
+                <li><a href="schemes.html">Schemes</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><button class="btn-theme" id="themeToggle">🌙 Dark Mode</button></li>
+                
+                <!-- Navbar Translate Widget -->
+                <li style="display: flex; align-items: center;">
+                    <div id="google_translate_element"></div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <h1>Live Farm Weather</h1>
+        <p>Get real-time atmospheric conditions to plan your irrigation, sowing, and harvesting schedules.</p>
+    </section>
+
+    <section class="weather-container">
+        
+        <div class="weather-search">
+            <input type="text" id="cityInput" placeholder="Enter Village, District, or City Name...">
+            <button id="searchBtn">Search Weather</button>
+        </div>
+
+        <p id="apiStatus" class="api-status status-mock">🟡 Using Offline Mock Data (API Key Required for Live Data)</p>
+
+        <div class="current-weather" id="weatherDashboard">
+            <h2 class="city-name" id="cityName">Nashik, Maharashtra</h2>
+            <p class="date-text" id="currentDate">Monday, 15 October</p>
+            
+            <div class="temp-display">
+                <img id="weatherIcon" src="https://openweathermap.org/img/wn/02d@2x.png" alt="Weather Icon">
+                <span class="temp-value"><span id="temperature">28</span>°C</span>
+            </div>
+            
+            <div class="weather-desc" id="description">Partly Cloudy</div>
+
+            <div class="weather-details">
+                <div class="detail-box">
+                    <p>💧 Humidity</p>
+                    <h4 id="humidity">65%</h4>
+                </div>
+                <div class="detail-box">
+                    <p>💨 Wind Speed</p>
+                    <h4 id="windSpeed">12 km/h</h4>
+                </div>
+                <div class="detail-box">
+                    <p>🌧️ Rainfall</p>
+                    <h4 id="rainfall">0 mm</h4>
+                </div>
+                <div class="detail-box">
+                    <p>🌡️ Feels Like</p>
+                    <h4 id="feelsLike">30°C</h4>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- VIROXA Brand Footer -->
+    <footer>
+        <p>&copy; 2026 Daily Farming Management System. Designed by <span class="designer-highlight">"VIROXA"</span></p>
+    </footer>
+
+    <!-- Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', 
+                includedLanguages: 'hi,mr,pa,gu,bn,te,ta,kn,en', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="js/script.js"></script>
+    <script src="js/weather.js"></script>
+</body>
+</html>

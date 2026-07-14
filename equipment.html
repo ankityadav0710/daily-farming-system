@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farming Equipment - AgroSystem</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* ==========================================================================
+           Google Translate UI Fixes & Designer Highlight
+           ========================================================================== */
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
+        .goog-te-gadget-simple {
+            background-color: var(--bg-surface) !important;
+            border: 1px solid var(--border-color) !important;
+            padding: 6px 10px !important;
+            border-radius: 25px !important;
+            font-size: 0.9rem !important;
+            font-family: 'Inter', sans-serif !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        .goog-te-gadget-simple span { color: var(--text-main) !important; }
+        .goog-te-gadget-icon { display: none !important; }
+
+        .designer-highlight {
+            color: var(--accent-color);
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: rgba(230, 126, 34, 0.15);
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .designer-highlight:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(230, 126, 34, 0.3);
+        }
+
+        /* ==========================================================================
+           Equipment Page Styles
+           ========================================================================== */
+        .page-header {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1592982537447-6f296cb30f02?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Equipment Grid Container */
+        .equipment-container {
+            max-width: 1200px;
+            margin: 0 auto 4rem auto;
+            padding: 0 20px;
+        }
+
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        /* Equipment Card Design */
+        .equipment-card {
+            background-color: var(--bg-surface);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .equipment-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        .equipment-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 4px solid var(--primary-color);
+        }
+
+        .equipment-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .equipment-content h2 {
+            color: var(--text-main);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .equipment-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .uses-section {
+            background-color: var(--bg-primary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: auto;
+            border: 1px dashed var(--border-color);
+        }
+
+        .uses-section h4 {
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .uses-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .uses-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 6px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        .uses-list li::before {
+            content: '⚙️';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">🌱 AgroSystem</a>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="crops.html">Crops</a></li>
+                <li><a href="area-statistics.html">Area Stats</a></li>
+                <li><a href="farmingtips.html">Tips</a></li>
+                <li><a href="weather.html">Weather</a></li>
+                <li><a href="equipment.html" class="active">Equipment</a></li>
+                <li><a href="schemes.html">Schemes</a></li>
+                <li><button class="btn-theme" id="themeToggle">🌙 Dark Mode</button></li>
+                
+                <!-- Navbar Translate Widget -->
+                <li style="display: flex; align-items: center;">
+                    <div id="google_translate_element"></div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <h1>Modern Farming Machinery</h1>
+        <p>Explore technical equipment designed to reduce manual labor, increase efficiency, and maximize agricultural output.</p>
+    </section>
+
+    <section class="equipment-container">
+        <div class="equipment-grid">
+            
+            <div class="equipment-card">
+                <img src="https://images.unsplash.com/photo-1592982537447-6f296cb30f02?auto=format&fit=crop&w=600&q=80" alt="Tractor" class="equipment-image">
+                <div class="equipment-content">
+                    <h2>Tractor</h2>
+                    <p class="equipment-desc">The backbone of modern agriculture, providing high tractive effort at slow speeds for the purposes of hauling a trailer or machinery.</p>
+                    <div class="uses-section">
+                        <h4>⚙️ Primary Uses</h4>
+                        <ul class="uses-list">
+                            <li>Pulling plows and cultivators</li>
+                            <li>Powering stationary attachments (PTO)</li>
+                            <li>Transporting heavy agricultural goods</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card">
+                <img src="https://images.unsplash.com/photo-1629853900293-8758c0e97298?auto=format&fit=crop&w=600&q=80" alt="Rotavator" class="equipment-image">
+                <div class="equipment-content">
+                    <h2>Rotavator</h2>
+                    <p class="equipment-desc">A tractor-driven rotary tillage implement that uses a series of blades to churn and pulverize the soil, leaving it ready for planting.</p>
+                    <div class="uses-section">
+                        <h4>⚙️ Primary Uses</h4>
+                        <ul class="uses-list">
+                            <li>Primary and secondary tillage</li>
+                            <li>Mixing fertilizer and crop residue</li>
+                            <li>Weed eradication and soil aeration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card">
+                <img src="https://images.unsplash.com/photo-1589714856417-66a9d941865e?auto=format&fit=crop&w=600&q=80" alt="Seed Drill" class="equipment-image">
+                <div class="equipment-content">
+                    <h2>Seed Drill</h2>
+                    <p class="equipment-desc">A sowing device that positions seeds in the soil and buries them at a specific depth and distance to ensure optimal germination rates.</p>
+                    <div class="uses-section">
+                        <h4>⚙️ Primary Uses</h4>
+                        <ul class="uses-list">
+                            <li>Uniform seed placement</li>
+                            <li>Saving seeds from bird consumption</li>
+                            <li>Simultaneous fertilizer application (Zero-till)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card">
+                <img src="https://images.unsplash.com/photo-1614064117865-c322b07bc365?auto=format&fit=crop&w=600&q=80" alt="Combine Harvester" class="equipment-image">
+                <div class="equipment-content">
+                    <h2>Combine Harvester</h2>
+                    <p class="equipment-desc">A massive, versatile machine designed to efficiently harvest a variety of grain crops by combining three separate operations into one continuous process.</p>
+                    <div class="uses-section">
+                        <h4>⚙️ Primary Uses</h4>
+                        <ul class="uses-list">
+                            <li>Reaping (cutting the crop)</li>
+                            <li>Threshing (separating grain from stalk)</li>
+                            <li>Winnowing (cleaning the grain)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card">
+                <img src="https://images.unsplash.com/photo-1595166373727-2eb18daec7c3?auto=format&fit=crop&w=600&q=80" alt="Cultivator" class="equipment-image">
+                <div class="equipment-content">
+                    <h2>Cultivator</h2>
+                    <p class="equipment-desc">An implement used for stirring and pulverizing the soil, either before planting (to aerate the soil) or after the crop has begun growing (to kill weeds).</p>
+                    <div class="uses-section">
+                        <h4>⚙️ Primary Uses</h4>
+                        <ul class="uses-list">
+                            <li>Uprooting persistent weeds</li>
+                            <li>Loosening crusted topsoil</li>
+                            <li>Preserving soil moisture</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card">
+                <img src="https://images.unsplash.com/photo-1590497556094-11883395c862?auto=format&fit=crop&w=600&q=80" alt="Power Tiller" class="equipment-image">
+                <div class="equipment-content">
+                    <h2>Power Tiller</h2>
+                    <p class="equipment-desc">A two-wheeled, pedestrian-operated tractor ideal for small and marginal farmers, especially highly effective in wetland paddy cultivation.</p>
+                    <div class="uses-section">
+                        <h4>⚙️ Primary Uses</h4>
+                        <ul class="uses-list">
+                            <li>Puddling in rice fields</li>
+                            <li>Tilling small or terraced plots</li>
+                            <li>Pumping water (via PTO attachments)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card">
+                <img src="https://images.unsplash.com/photo-1598124237936-c0c538a7c293?auto=format&fit=crop&w=600&q=80" alt="Sprayer" class="equipment-image">
+                <div class="equipment-content">
+                    <h2>Boom Sprayer</h2>
+                    <p class="equipment-desc">Equipment used to apply herbicides, pesticides, and fertilizers on agricultural crops. Available in backpack, ATV, or tractor-mounted variations.</p>
+                    <div class="uses-section">
+                        <h4>⚙️ Primary Uses</h4>
+                        <ul class="uses-list">
+                            <li>Even distribution of liquid chemicals</li>
+                            <li>Foliar feeding (liquid fertilizer)</li>
+                            <li>Large-scale pest management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card">
+                <img src="https://images.unsplash.com/photo-1621213032546-2f08dc6f315a?auto=format&fit=crop&w=600&q=80" alt="Water Pump" class="equipment-image">
+                <div class="equipment-content">
+                    <h2>Irrigation Water Pump</h2>
+                    <p class="equipment-desc">Essential mechanical devices used to lift water from groundwater wells, canals, or rivers to provide controlled amounts of water to plants.</p>
+                    <div class="uses-section">
+                        <h4>⚙️ Primary Uses</h4>
+                        <ul class="uses-list">
+                            <li>Supplying drip and sprinkler systems</li>
+                            <li>Flood irrigation management</li>
+                            <li>Draining waterlogged fields</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- VIROXA Brand Footer -->
+    <footer>
+        <p>&copy; 2026 Daily Farming Management System. Designed by <span class="designer-highlight">"VIROXA"</span></p>
+    </footer>
+
+    <!-- Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', 
+                includedLanguages: 'hi,mr,pa,gu,bn,te,ta,kn,en', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

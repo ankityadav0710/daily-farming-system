@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Daily Farming Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .page-header {
+            background: linear-gradient(rgba(39, 174, 96, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 2rem;
+        }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .about-section { max-width: 1200px; margin: 0 auto 4rem auto; padding: 0 20px; }
+        .split-layout { display: flex; flex-wrap: wrap; align-items: center; gap: 2rem; margin-bottom: 3rem; }
+        .split-text { flex: 1 1 500px; }
+        .split-text h2 { color: var(--primary-dark); font-size: 2rem; margin-bottom: 1rem; }
+        .split-text p { margin-bottom: 1rem; font-size: 1.1rem; color: var(--text-muted); }
+        .split-image { flex: 1 1 400px; }
+        .split-image img { width: 100%; border-radius: 12px; box-shadow: var(--shadow); object-fit: cover; }
+        .mission-vision-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+        .mv-card { background-color: var(--bg-surface); padding: 2rem; border-radius: 12px; box-shadow: var(--shadow); border-top: 4px solid var(--primary-color); text-align: center; }
+        .mv-card h3 { font-size: 1.5rem; color: var(--primary-dark); margin-bottom: 1rem; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+        .feature-box h3 { color: var(--primary-dark); margin-bottom: 1.5rem; font-size: 1.8rem; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
+        .feature-list { list-style: none; }
+        .feature-list li { position: relative; padding-left: 30px; margin-bottom: 15px; font-size: 1.1rem; color: var(--text-main); }
+        .feature-list li::before { content: '✅'; position: absolute; left: 0; top: 0; color: var(--primary-color); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">🌱 AgroSystem</a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="crops.html">Crops</a></li>
+                <li><a href="area-statistics.html">Area Stats</a></li>
+                <li><a href="farmingtips.html">Tips</a></li>
+                <li><a href="weather.html">Weather</a></li>
+                <li><a href="schemes.html">Schemes</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><button class="btn-theme" id="themeToggle">🌙 Dark Mode</button></li>
+                
+                <li style="display: flex; align-items: center;">
+                    <div id="google_translate_element"></div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <h1>About AgroSystem</h1>
+        <p>Bridging the gap between traditional farming and modern technology.</p>
+    </section>
+
+    <section class="about-section split-layout">
+        <div class="split-text">
+            <h2>The Importance of Agriculture</h2>
+            <p>Agriculture is the backbone of the economy and the primary source of livelihood for millions worldwide. It not only provides the food and raw materials essential for human survival but also plays a crucial role in maintaining ecological balance.</p>
+            <p>With a growing global population, the pressure on agricultural lands is increasing. This is why transitioning to informed, data-driven farming is no longer just an option—it is a necessity for sustainable future growth.</p>
+        </div>
+        <div class="split-image">
+            <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad849?auto=format&fit=crop&w=800&q=80" alt="Farmer in a green field">
+        </div>
+    </section>
+
+    <section class="about-section mission-vision-grid">
+        <div class="mv-card">
+            <h3>🎯 Our Mission</h3>
+            <p>To empower farmers, students, and agricultural enthusiasts by providing a centralized, accessible platform filled with accurate data on crops, weather, schemes, and modern farming techniques to maximize yield and profitability.</p>
+        </div>
+        <div class="mv-card">
+            <h3>👁️ Our Vision</h3>
+            <p>To create a digitally connected agricultural ecosystem where every farmer has instant access to the statistics, technological knowledge, and environmental data needed to practice sustainable and highly productive agriculture.</p>
+        </div>
+    </section>
+
+    <section class="about-section features-grid">
+        <div class="feature-box">
+            <h3>Project Objectives</h3>
+            <ul class="feature-list">
+                <li>Provide complete and accurate farming information in one place.</li>
+                <li>Help farmers choose suitable crops based on area-wise statistics.</li>
+                <li>Promote sustainable and organic agriculture practices.</li>
+                <li>Increase awareness regarding correct fertilizer and pesticide usage.</li>
+                <li>Deliver real-time weather updates to aid in daily farm planning.</li>
+                <li>Serve as an educational hub for agriculture students and researchers.</li>
+            </ul>
+        </div>
+
+        <div class="feature-box">
+            <h3>Benefits of Modern Farming</h3>
+            <ul class="feature-list">
+                <li><strong>Higher Crop Yields:</strong> Using scientific methods and soil testing ensures maximum production.</li>
+                <li><strong>Resource Efficiency:</strong> Drip irrigation and precision farming save massive amounts of water and fertilizer.</li>
+                <li><strong>Reduced Risk:</strong> Weather forecasting and pest alerts help minimize crop damage.</li>
+                <li><strong>Better Income:</strong> Access to government schemes and market trends improves financial stability.</li>
+                <li><strong>Environmental Protection:</strong> Modern organic techniques preserve soil health for future generations.</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Daily Farming Management System. Designed by <span class="designer-highlight">"VIROXA"</span></p>
+    </footer>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', 
+                includedLanguages: 'hi,mr,pa,gu,bn,te,ta,kn,en', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

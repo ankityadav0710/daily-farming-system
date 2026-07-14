@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pest & Disease Management - AgroSystem</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .page-header {
+            background: linear-gradient(rgba(192, 57, 43, 0.8), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1629853900293-8758c0e97298?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+
+        .management-container {
+            max-width: 1200px;
+            margin: 0 auto 4rem auto;
+            padding: 0 20px;
+        }
+
+        /* Search & Filter Bar */
+        .search-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .search-controls input {
+            padding: 12px 20px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+
+        /* Disease Grid */
+        .disease-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .disease-card {
+            background-color: var(--bg-surface);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .disease-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .disease-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .disease-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .badge {
+            align-self: flex-start;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+        }
+        .badge.pest { background-color: #e67e22; }
+        .badge.disease { background-color: #c0392b; }
+
+        .disease-info h3 {
+            color: var(--text-main);
+            margin-bottom: 5px;
+            font-size: 1.4rem;
+        }
+
+        .disease-info p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .btn-view {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .btn-view:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Modal (Popup) Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--bg-surface);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-primary);
+            position: sticky;
+            top: 0;
+        }
+
+        .modal-header h2 {
+            color: var(--primary-dark);
+            margin: 0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .modal-body { padding: 20px; }
+
+        .diagnosis-section {
+            margin-bottom: 20px;
+            background-color: var(--bg-primary);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .diagnosis-section h4 {
+            color: var(--text-main);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .diagnosis-section ul {
+            padding-left: 20px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">🌱 AgroSystem</a>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="crops.html">Crops</a></li>
+                <li><a href="area-statistics.html">Area Stats</a></li>
+                <li><a href="farmingtips.html">Tips</a></li>
+                <li><a href="weather.html">Weather</a></li>
+                <li><a href="disease.html" class="active">Pest & Disease</a></li>
+                <li><a href="schemes.html">Schemes</a></li>
+                <li><button class="btn-theme" id="themeToggle">🌙 Dark Mode</button></li>
+                
+                <li style="display: flex; align-items: center;">
+                    <div id="google_translate_element"></div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <h1>Pest & Disease Diagnostic Tool</h1>
+        <p>Identify crop threats early and discover organic and chemical treatment methods.</p>
+    </section>
+
+    <section class="management-container">
+        
+        <div class="search-controls">
+            <input type="text" id="searchInput" placeholder="Search by pest, disease, or crop name (e.g., 'Wheat' or 'Rust')...">
+        </div>
+
+        <div class="disease-grid" id="diseaseGrid">
+            </div>
+
+    </section>
+
+    <div class="modal-overlay" id="diagnosisModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Diagnosis</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="diagnosis-section">
+                    <h4>🔍 Symptoms</h4>
+                    <ul id="modalSymptoms"></ul>
+                </div>
+                <div class="diagnosis-section">
+                    <h4>🦠 Causes / Conditions</h4>
+                    <ul id="modalCauses"></ul>
+                </div>
+                <div class="diagnosis-section" style="border-left-color: #27ae60;">
+                    <h4>🌿 Organic Prevention</h4>
+                    <ul id="modalOrganic"></ul>
+                </div>
+                <div class="diagnosis-section" style="border-left-color: #c0392b;">
+                    <h4>🧪 Chemical Treatment</h4>
+                    <ul id="modalChemical"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Daily Farming Management System. Designed by <span class="designer-highlight">"VIROXA"</span></p>
+    </footer>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', 
+                includedLanguages: 'hi,mr,pa,gu,bn,te,ta,kn,en', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="js/script.js"></script>
+
+    <script>
+        // 1. Mock Database for Pests and Diseases
+        const diseaseDB = [
+            {
+                id: 1,
+                name: "Stem Borer",
+                type: "pest",
+                crops: "Rice, Maize, Sugarcane",
+                image: "https://images.unsplash.com/photo-1590497556094-11883395c862?auto=format&fit=crop&w=600&q=80",
+                symptoms: ["Dead heart in young plants.", "Whiteheads during the flowering stage.", "Holes on stems with frass (excrement)."],
+                causes: ["High humidity and warm temperatures.", "Continuous planting of the same crop."],
+                organic: ["Release Trichogramma egg parasitoids.", "Use light traps to catch adult moths.", "Apply Neem oil extract."],
+                chemical: ["Apply Cartap Hydrochloride 4G.", "Spray Chlorantraniliprole 18.5 SC."]
+            },
+            {
+                id: 2,
+                name: "Aphids",
+                type: "pest",
+                crops: "Wheat, Mustard, Cotton, Vegetables",
+                image: "https://images.unsplash.com/photo-1595166373727-2eb18daec7c3?auto=format&fit=crop&w=600&q=80",
+                symptoms: ["Curling and yellowing of young leaves.", "Sticky honeydew on leaves.", "Presence of black sooty mold."],
+                causes: ["Dry and warm weather conditions.", "Excessive nitrogen fertilizer use."],
+                organic: ["Introduce Ladybird beetles (natural predators).", "Spray 5% Neem Seed Kernel Extract (NSKE).", "Strong water jet to dislodge them."],
+                chemical: ["Spray Imidacloprid 17.8 SL.", "Apply Thiamethoxam 25 WG."]
+            },
+            {
+                id: 3,
+                name: "Late Blight",
+                type: "disease",
+                crops: "Potato, Tomato",
+                image: "https://images.unsplash.com/photo-1582294711584-0a37731776ce?auto=format&fit=crop&w=600&q=80",
+                symptoms: ["Water-soaked spots on leaves.", "White fungal growth on the underside of leaves.", "Tubers develop brown, necrotic lesions."],
+                causes: ["Caused by Phytophthora infestans.", "Prolonged cool, wet, and highly humid weather."],
+                organic: ["Ensure proper spacing for air circulation.", "Use disease-free certified seeds.", "Copper-based organic fungicides."],
+                chemical: ["Preventive spray of Mancozeb 75 WP.", "Curative spray of Metalaxyl + Mancozeb."]
+            },
+            {
+                id: 4,
+                name: "Rust (Brown/Yellow)",
+                type: "disease",
+                crops: "Wheat, Barley",
+                image: "https://images.unsplash.com/photo-1621868512803-b03d6d5eb31e?auto=format&fit=crop&w=600&q=80",
+                symptoms: ["Yellow or brown powdery pustules on leaves.", "Pustules arrange in linear stripes.", "Premature drying of leaves."],
+                causes: ["Fungal infection (Puccinia species).", "High moisture and temperatures between 10-20°C."],
+                organic: ["Crop rotation with non-cereal crops.", "Grow rust-resistant wheat varieties.", "Sulfur dusting."],
+                chemical: ["Spray Propiconazole 25 EC.", "Apply Tebuconazole 25.9 EC at first sign of disease."]
+            },
+            {
+                id: 5,
+                name: "Root Rot",
+                type: "disease",
+                crops: "Cotton, Groundnut, Pulses",
+                image: "https://images.unsplash.com/photo-1505504780517-8e10d481daec?auto=format&fit=crop&w=600&q=80",
+                symptoms: ["Sudden wilting of the entire plant.", "Roots turn brown or black and become mushy.", "Bark of roots shreds easily."],
+                causes: ["Soil-borne fungi (Rhizoctonia/Macrophomina).", "Waterlogged or poorly drained soils.", "High soil temperature."],
+                organic: ["Seed treatment with Trichoderma viride.", "Improve soil drainage.", "Deep summer ploughing to expose pathogens."],
+                chemical: ["Seed treatment with Carbendazim.", "Soil drenching with Copper Oxychloride."]
+            }
+        ];
+
+        const diseaseGrid = document.getElementById('diseaseGrid');
+        const searchInput = document.getElementById('searchInput');
+        const modal = document.getElementById('diagnosisModal');
+        const closeModalBtn = document.getElementById('closeModal');
+
+        // 2. Render Cards Function
+        function renderCards(data) {
+            diseaseGrid.innerHTML = ''; // Clear current grid
+
+            if(data.length === 0) {
+                diseaseGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No matching pests or diseases found.</p>`;
+                return;
+            }
+
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'disease-card';
+                card.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="disease-info">
+                        <span class="badge ${item.type}">${item.type.toUpperCase()}</span>
+                        <h3>${item.name}</h3>
+                        <p><strong>Affects:</strong> ${item.crops}</p>
+                        <button class="btn-view" onclick="openModal(${item.id})">View Diagnosis</button>
+                    </div>
+                `;
+                diseaseGrid.appendChild(card);
+            });
+        }
+
+        // 3. Real-time Search Filter
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filteredData = diseaseDB.filter(item => {
+                return item.name.toLowerCase().includes(term) || 
+                       item.crops.toLowerCase().includes(term) || 
+                       item.type.toLowerCase().includes(term);
+            });
+            renderCards(filteredData);
+        });
+
+        // 4. Modal Logic
+        window.openModal = function(id) {
+            const data = diseaseDB.find(item => item.id === id);
+            if(!data) return;
+
+            // Populate Modal
+            document.getElementById('modalTitle').textContent = `${data.name} Diagnosis`;
+            
+            const populateList = (elementId, array) => {
+                const ul = document.getElementById(elementId);
+                ul.innerHTML = array.map(li => `<li>${li}</li>`).join('');
+            };
+
+            populateList('modalSymptoms', data.symptoms);
+            populateList('modalCauses', data.causes);
+            populateList('modalOrganic', data.organic);
+            populateList('modalChemical', data.chemical);
+
+            // Show Modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        };
+
+        const closeModal = () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        };
+
+        closeModalBtn.addEventListener('click', closeModal);
+
+        // Close modal when clicking outside of it
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // 5. Initial Render
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCards(diseaseDB);
+        });
+    </script>
+</body>
+</html>

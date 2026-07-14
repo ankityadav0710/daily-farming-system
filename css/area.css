@@ -1,0 +1,208 @@
+/* ==========================================================================
+   Area Statistics - Page Header
+   ========================================================================== */
+.page-header {
+    background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.9)), 
+                url('https://images.unsplash.com/photo-1592982537447-6f296cb30f02?auto=format&fit=crop&w=1920&q=80') center/cover;
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+    margin-bottom: 2rem;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+/* ==========================================================================
+   Dashboard Container & Layout
+   ========================================================================== */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto 4rem auto;
+    padding: 0 20px;
+}
+
+/* ==========================================================================
+   Filter Section (Cascading Dropdowns)
+   ========================================================================== */
+.filter-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    background-color: var(--bg-surface);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+
+.filter-control {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-control label {
+    font-weight: 600;
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+.filter-control select {
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    cursor: pointer;
+    transition: var(--transition);
+    appearance: auto; /* Ensures native dropdown styling */
+}
+
+.filter-control select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.15);
+}
+
+.filter-control select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--border-color); /* Slightly darker to indicate disabled state */
+}
+
+/* ==========================================================================
+   Statistics Dashboard (Dynamic Reveal)
+   ========================================================================== */
+.stats-dashboard {
+    display: none; /* Hidden by default, toggled by area.js */
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(15px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* ==========================================================================
+   Summary Meta Cards
+   ========================================================================== */
+.meta-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.meta-card {
+    background-color: var(--bg-surface);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border-left: 5px solid var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: transform 0.3s ease;
+}
+
+.meta-card:hover {
+    transform: translateY(-3px);
+}
+
+.meta-icon {
+    font-size: 2.5rem;
+    background-color: rgba(46, 204, 113, 0.1);
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 80px;
+}
+
+.meta-info p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+}
+
+.meta-info h3 {
+    color: var(--text-main);
+    font-size: 1.8rem;
+    line-height: 1.2;
+}
+
+/* ==========================================================================
+   Data Table Styling
+   ========================================================================== */
+.table-container {
+    background-color: var(--bg-surface);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    /* Allows horizontal scrolling on very small devices */
+    overflow-x: auto; 
+}
+
+.table-container h3 {
+    color: var(--primary-dark);
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    border-bottom: 2px solid var(--bg-primary);
+    padding-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 600px; /* Prevents columns from squishing too much */
+}
+
+th, td {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+    background-color: var(--bg-primary);
+}
+
+td {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+td strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}

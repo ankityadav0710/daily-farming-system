@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Library - Daily Farming Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/crops.css">
+    <style>
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">🌱 AgroSystem</a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="crops.html" class="active">Crops</a></li>
+                <li><a href="area-statistics.html">Area Stats</a></li>
+                <li><a href="farmingtips.html">Tips</a></li>
+                <li><a href="weather.html">Weather</a></li>
+                <li><a href="schemes.html">Schemes</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><button class="btn-theme" id="themeToggle">🌙 Dark Mode</button></li>
+                
+                <li style="display: flex; align-items: center;">
+                    <div id="google_translate_element"></div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <h1>Comprehensive Crop Database</h1>
+        <p>Explore production dynamics, environmental profiles, and cultivation parameters for regional Indian crops.</p>
+    </section>
+
+    <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">All Crops</button>
+        <button class="filter-btn" data-filter="cereal">Cereals</button>
+        <button class="filter-btn" data-filter="millet">Millets</button>
+        <button class="filter-btn" data-filter="pulse">Pulses</button>
+        <button class="filter-btn" data-filter="vegetable">Vegetables</button>
+        <button class="filter-btn" data-filter="spice">Spices & Cash</button>
+    </div>
+
+    <section class="crop-grid" id="cropGrid">
+        
+        <div class="crop-card" data-category="cereal">
+            <img src="https://images.unsplash.com/photo-1599839619722-39751411ea63?auto=format&fit=crop&w=400&q=80" alt="Rice Field">
+            <div class="crop-info">
+                <span class="crop-category">Cereal (Kharif Staple)</span>
+                <h2 class="crop-title">Rice (Paddy)</h2>
+                <p class="crop-desc">The primary monsoon crop. Requires consistent standing moisture levels and clayey alluvial soils.</p>
+                <a href="crop-details.html?crop=rice" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="cereal">
+            <img src="https://images.unsplash.com/photo-1586201375761-83865001e8ac?auto=format&fit=crop&w=400&q=80" alt="Wheat Field">
+            <div class="crop-info">
+                <span class="crop-category">Cereal (Rabi Core)</span>
+                <h2 class="crop-title">Wheat</h2>
+                <p class="crop-desc">Major winter crop across UP and Bihar plains, demanding bright sunshine for grain hardening.</p>
+                <a href="crop-details.html?crop=wheat" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="cereal">
+            <img src="https://images.unsplash.com/photo-1601314167099-232775b3d6fd?auto=format&fit=crop&w=400&q=80" alt="Maize">
+            <div class="crop-info">
+                <span class="crop-category">Cereal (Flexible)</span>
+                <h2 class="crop-title">Maize (Corn)</h2>
+                <p class="crop-desc">Highly versatile dual-use food and industrial grain fodder crop matching well-drained loams.</p>
+                <a href="crop-details.html?crop=maize" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="millet">
+            <img src="https://images.unsplash.com/photo-1622484211148-716598e09141?auto=format&fit=crop&w=400&q=80" alt="Finger Millet">
+            <div class="crop-info">
+                <span class="crop-category">Millet (Resilient)</span>
+                <h2 class="crop-title">Finger Millet (Ragi)</h2>
+                <p class="crop-desc">Climate-hardy nutritious millet cultivated across rainfed terraces and skeletal soils.</p>
+                <a href="crop-details.html?crop=finger-millet" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="millet">
+            <img src="https://images.unsplash.com/photo-1574316071802-0d684efa7bf5?auto=format&fit=crop&w=400&q=80" alt="Foxtail Millet">
+            <div class="crop-info">
+                <span class="crop-category">Millet (Short Duration)</span>
+                <h2 class="crop-title">Foxtail Millet</h2>
+                <p class="crop-desc">Ancient drought-defying crop maturing rapidly inside marginal drought-prone terrains.</p>
+                <a href="crop-details.html?crop=foxtail-millet" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="millet">
+            <img src="https://images.unsplash.com/photo-1531265726415-a2e99a5bf078?auto=format&fit=crop&w=400&q=80" alt="Barley">
+            <div class="crop-info">
+                <span class="crop-category">Millet / Cereal</span>
+                <h2 class="crop-title">Barley</h2>
+                <p class="crop-desc">Thrives in cool mountain tracts and high-altitude zones with minimal fertilizer reliance.</p>
+                <a href="crop-details.html?crop=barley" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="pulse">
+            <img src="https://images.unsplash.com/photo-1603048588665-791ca8aea617?auto=format&fit=crop&w=400&q=80" alt="Black Gram">
+            <div class="crop-info">
+                <span class="crop-category">Pulse (Nitrogen Fixing)</span>
+                <h2 class="crop-title">Black Gram (Urad)</h2>
+                <p class="crop-desc">Essential high-protein legume pulse crop stabilizing nutrient composition in crop rotations.</p>
+                <a href="crop-details.html?crop=black-gram" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="pulse">
+            <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=400&q=80" alt="Green Gram">
+            <div class="crop-info">
+                <span class="crop-category">Pulse (Short Cycle)</span>
+                <h2 class="crop-title">Green Gram (Moong)</h2>
+                <p class="crop-desc">Grown as an efficient summer catch crop maximizing utilization of fallow fields.</p>
+                <a href="crop-details.html?crop=green-gram" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="pulse">
+            <img src="https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=400&q=80" alt="Pigeon Pea">
+            <div class="crop-info">
+                <span class="crop-category">Pulse (Commercial)</span>
+                <h2 class="crop-title">Pigeon Pea (Arhar)</h2>
+                <p class="crop-desc">Deep-rooted, drought-tolerant primary pulse forming a core element of dryland farming.</p>
+                <a href="crop-details.html?crop=pigeon-pea" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="pulse">
+            <img src="https://images.unsplash.com/photo-1551248429-4043b9a73bf2?auto=format&fit=crop&w=400&q=80" alt="Rajma">
+            <div class="crop-info">
+                <span class="crop-category">Pulse (Premium)</span>
+                <h2 class="crop-title">Rajma (Kidney Bean)</h2>
+                <p class="crop-desc">Demands precise drainage profiles and temperate conditions. Highly profitable valley crop.</p>
+                <a href="crop-details.html?crop=rajma" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="vegetable">
+            <img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=400&q=80" alt="Potato">
+            <div class="crop-info">
+                <span class="crop-category">Vegetable (Tuber Cash)</span>
+                <h2 class="crop-title">Potato</h2>
+                <p class="crop-desc">Massive high-yield commercial tuber dominating cold-storage supply chains across UP plains.</p>
+                <a href="crop-details.html?crop=potato" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="vegetable">
+            <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=400&q=80" alt="Tomato">
+            <div class="crop-info">
+                <span class="crop-category">Vegetable (Perishable)</span>
+                <h2 class="crop-title">Tomato</h2>
+                <p class="crop-desc">Demands rigorous stake trellis engineering and consistent drip line irrigation control.</p>
+                <a href="crop-details.html?crop=tomato" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="vegetable">
+            <img src="https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=400&q=80" alt="Onion">
+            <div class="crop-info">
+                <span class="crop-category">Vegetable (Bulb)</span>
+                <h2 class="crop-title">Onion</h2>
+                <p class="crop-desc">Essential high-demand culinary bulb demanding specific dry handling during finishing steps.</p>
+                <a href="crop-details.html?crop=onion" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="vegetable">
+            <img src="https://images.unsplash.com/photo-1590497556094-11883395c862?auto=format&fit=crop&w=400&q=80" alt="Bitter Gourd">
+            <div class="crop-info">
+                <span class="crop-category">Vegetable (Cucurbit)</span>
+                <h2 class="crop-title">Bitter Gourd</h2>
+                <p class="crop-desc">Profitable vining warm-season vegetable managed over structural trellis nets.</p>
+                <a href="crop-details.html?crop=bitter-gourd" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="spice">
+            <img src="https://images.unsplash.com/photo-1506465492482-1d5d5904d0af?auto=format&fit=crop&w=400&q=80" alt="Sugarcane">
+            <div class="crop-info">
+                <span class="crop-category">Industrial Cash Crop</span>
+                <h2 class="crop-title">Sugarcane</h2>
+                <p class="crop-desc">Premier long-duration commercial feedstock supplying regional sugar milling plants.</p>
+                <a href="crop-details.html?crop=sugarcane" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="spice">
+            <img src="https://images.unsplash.com/photo-1594911494819-27038e92f768?auto=format&fit=crop&w=400&q=80" alt="Cotton">
+            <div class="crop-info">
+                <span class="crop-category">Industrial Cash Crop</span>
+                <h2 class="crop-title">Cotton</h2>
+                <p class="crop-desc">Thrives across specialized dry black soil expanses. High industrial milling demand.</p>
+                <a href="crop-details.html?crop=cotton" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="spice">
+            <img src="https://images.unsplash.com/photo-1580227289569-8080072b22f6?auto=format&fit=crop&w=400&q=80" alt="Mustard Field">
+            <div class="crop-info">
+                <span class="crop-category">Oilseed Core</span>
+                <h2 class="crop-title">Mustard</h2>
+                <p class="crop-desc">Dominant winter oilseed with high localized oil-expeller commercial trading footprint.</p>
+                <a href="crop-details.html?crop=mustard" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="spice">
+            <img src="https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=400&q=80" alt="Ginger">
+            <div class="crop-info">
+                <span class="crop-category">Spice Rhizome</span>
+                <h2 class="crop-title">Ginger</h2>
+                <p class="crop-desc">High-value rhizome crop suited to rich organic soils and shadowed mountain valley tracts.</p>
+                <a href="crop-details.html?crop=ginger" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+        <div class="crop-card" data-category="spice">
+            <img src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=400&q=80" alt="Turmeric">
+            <div class="crop-info">
+                <span class="crop-category">Spice Rhizome</span>
+                <h2 class="crop-title">Turmeric</h2>
+                <p class="crop-desc">Demands deep processing treatment post harvest. High industrial pharmaceutical and culinary asset.</p>
+                <a href="crop-details.html?crop=turmeric" class="btn-learn">View Details →</a>
+            </div>
+        </div>
+
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Daily Farming Management System. Designed by <span class="designer-highlight">"VIROXA"</span></p>
+    </footer>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', 
+                includedLanguages: 'hi,mr,pa,gu,bn,te,ta,kn,en', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const cropCards = document.querySelectorAll('.crop-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    cropCards.forEach(card => {
+                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

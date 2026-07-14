@@ -1,0 +1,263 @@
+/* --- Global Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* --- Root Variables (Light Theme Defaults) --- */
+:root {
+    --bg-primary: #f4f7f6;        
+    --bg-surface: #ffffff;        
+    --text-main: #2c3e50;         
+    --text-muted: #7f8c8d;        
+    
+    --primary-color: #2ecc71;     
+    --primary-dark: #27ae60;      
+    --accent-color: #e67e22;      
+    
+    --border-color: #e2e8f0;      
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --transition: all 0.3s ease;
+}
+
+/* --- Dark Theme Overrides --- */
+[data-theme="dark"] {
+    --bg-primary: #121212;
+    --bg-surface: #1e1e1e;
+    --text-main: #f8f9fa;
+    --text-muted: #a0aec0;
+    
+    --primary-color: #27ae60;
+    --border-color: #2d3748;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Base Resets --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden; 
+}
+
+h1, h2, h3, h4, h5, h6 { line-height: 1.3; font-weight: 700; }
+a { text-decoration: none; color: inherit; }
+
+/* --- Header & Navigation --- */
+header {
+    background-color: var(--bg-surface);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 20px;
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+}
+
+.logo:hover { transform: scale(1.02); }
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav-menu a {
+    color: var(--text-main);
+    font-weight: 500;
+    font-size: 1rem;
+    transition: var(--transition);
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.nav-menu a:hover::after, .nav-menu a.active::after { width: 100%; }
+.nav-menu a:hover, .nav-menu a.active { color: var(--primary-color); }
+
+/* --- Buttons & UI Elements --- */
+.btn-theme {
+    background: none;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.4rem 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-theme:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    padding: 0;
+    z-index: 1001; 
+}
+
+.menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-main);
+    border-radius: 3px;
+    transition: var(--transition);
+}
+
+/* --- Footer --- */
+footer {
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--border-color);
+    padding: 2.5rem 20px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-top: auto; 
+    transition: background-color 0.3s ease;
+}
+
+footer a { color: var(--primary-color); font-weight: 500; transition: var(--transition); }
+footer a:hover { color: var(--primary-dark); text-decoration: underline; }
+
+/* --- Responsive Layout Rules --- */
+@media (max-width: 992px) {
+    .menu-toggle { display: flex; }
+    .nav-menu {
+        position: absolute; top: 100%; left: 0; width: 100%;
+        background-color: var(--bg-surface); flex-direction: column;
+        padding: 2rem; gap: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border-top: 1px solid var(--border-color);
+        transform: translateY(-150%); opacity: 0; visibility: hidden;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        z-index: 999;
+    }
+    .nav-menu.active { transform: translateY(0); opacity: 1; visibility: visible; }
+    .nav-menu li { width: 100%; text-align: center; }
+    .nav-menu a::after { display: none; }
+    .btn-theme { width: 100%; justify-content: center; }
+    .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+}
+
+/* ==========================================================================
+   Google Translate UI Fixes (ULTIMATE FIX) & Designer Highlight
+   ========================================================================== */
+
+/* 1. Hide the top banner completely */
+iframe.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* 2. Prevent the body from being pushed down */
+html, body {
+    top: 0px !important;
+    position: static !important;
+    margin-top: 0px !important;
+}
+
+/* 3. Hide the hover tooltip box that appears over text */
+#goog-gt-tt, 
+.goog-te-balloon-frame {
+    display: none !important;
+}
+
+/* 4. Remove yellow highlight on translated text */
+.goog-text-highlight {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* 5. Style the translate button itself */
+.goog-te-gadget-simple {
+    background-color: var(--bg-surface) !important;
+    border: 1px solid var(--border-color) !important;
+    padding: 6px 10px !important;
+    border-radius: 25px !important;
+    font-size: 0.9rem !important;
+    font-family: 'Inter', sans-serif !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.goog-te-gadget-simple span {
+    color: var(--text-main) !important;
+}
+
+.goog-te-gadget-icon {
+    display: none !important; 
+}
+
+/* 6. VIROXA Footer Highlight */
+.designer-highlight {
+    color: var(--accent-color);
+    font-weight: 800;
+    letter-spacing: 1px;
+    background: rgba(230, 126, 34, 0.15);
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    transition: var(--transition);
+    display: inline-block;
+}
+
+.designer-highlight:hover {
+    background: var(--accent-color);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(230, 126, 34, 0.3);
+}

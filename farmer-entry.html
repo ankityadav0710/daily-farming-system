@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Data Entry - AgroSystem</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* ==========================================================================
+           Google Translate UI Fixes & Designer Highlight
+           ========================================================================== */
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
+        .goog-te-gadget-simple {
+            background-color: var(--bg-surface) !important;
+            border: 1px solid var(--border-color) !important;
+            padding: 6px 10px !important;
+            border-radius: 25px !important;
+            font-size: 0.9rem !important;
+            font-family: 'Inter', sans-serif !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        .goog-te-gadget-simple span { color: var(--text-main) !important; }
+        .goog-te-gadget-icon { display: none !important; }
+
+        .designer-highlight {
+            color: var(--accent-color);
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: rgba(230, 126, 34, 0.15);
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .designer-highlight:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(230, 126, 34, 0.3);
+        }
+
+        /* ==========================================================================
+           Page Specific Styles
+           ========================================================================== */
+        .page-header {
+            background: linear-gradient(rgba(46, 204, 113, 0.8), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1592982537447-6f296cb30f02?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .form-container { 
+            max-width: 650px; 
+            margin: 0 auto 4rem auto; 
+            background: var(--bg-surface); 
+            padding: 2.5rem; 
+            border-radius: 12px; 
+            box-shadow: var(--shadow); 
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main); }
+        .form-group input, .form-group select { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
+        }
+
+        .btn-submit { 
+            width: 100%; 
+            padding: 14px; 
+            background: var(--primary-color); 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 1.1rem; 
+            font-weight: bold;
+            cursor: pointer; 
+            transition: var(--transition);
+        }
+        
+        .btn-submit:hover {
+            background: var(--primary-dark);
+        }
+
+        .success-msg { 
+            display: none; 
+            background: rgba(46, 204, 113, 0.1); 
+            color: var(--primary-dark); 
+            padding: 15px; 
+            margin-top: 20px; 
+            border-radius: 8px; 
+            border-left: 4px solid var(--primary-color);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">🌱 AgroSystem</a>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="crops.html">Crops</a></li>
+                <li><a href="area-statistics.html">Area Stats</a></li>
+                <li><a href="disease.html">Pest & Disease</a></li>
+                <li><a href="fertilizer.html">Fertilizers</a></li>
+                <li><a href="schemes.html">Schemes</a></li>
+                <li><button class="btn-theme" id="themeToggle">🌙 Mode</button></li>
+                
+                <li style="display: flex; align-items: center;">
+                    <div id="google_translate_element"></div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <h1>Join Our Farmer Community</h1>
+        <p>Submit your crop details to feature in our Area Statistics and help us build a stronger agricultural network.</p>
+    </section>
+
+    <div class="form-container">
+        <h2 style="color: var(--primary-dark); margin-bottom: 20px;">🌾 Update Your Farming Data</h2>
+        
+        <form id="farmerForm">
+            <div class="form-group">
+                <label>Farmer Name (Kisan ka Naam) <span style="color: red;">*</span></label>
+                <input type="text" id="fName" placeholder="Enter full name" required>
+            </div>
+            
+            <div class="form-group">
+                <label>State (Rajya) <span style="color: red;">*</span></label>
+                <select id="fState" required>
+                    <option value="">-- Select State --</option>
+                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    <option value="Bihar">Bihar</option>
+                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                    <option value="Uttarakhand">Uttarakhand</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>District (Zila) <span style="color: red;">*</span></label>
+                <input type="text" id="fDistrict" placeholder="e.g., Prayagraj, Patna, Indore" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Village (Gaon) <span style="color: red;">*</span></label>
+                <input type="text" id="fVillage" placeholder="Enter your village name" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Crop Planted (Kaunsi Fasal lagai?) <span style="color: red;">*</span></label>
+                <input type="text" id="fCrop" placeholder="e.g., Wheat, Rice, Sugarcane" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Area Cultivated in Acres (Kitni Zameen par?) <span style="color: red;">*</span></label>
+                <input type="number" id="fArea" placeholder="Enter area in acres" required>
+            </div>
+            
+            <button type="submit" class="btn-submit">Submit Data</button>
+        </form>
+        
+        <div class="success-msg" id="successMsg">
+            ✅ Data submitted successfully! Waiting for Admin verification. (Aapka data chala gaya hai, Admin check karenge).
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Daily Farming Management System. Designed by <span class="designer-highlight">"VIROXA"</span></p>
+    </footer>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', 
+                includedLanguages: 'hi,mr,pa,gu,bn,te,ta,kn,en', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="js/script.js"></script>
+
+    <script>
+        document.getElementById('farmerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get existing data or create empty array
+            let submissions = JSON.parse(localStorage.getItem('farmerSubmissions')) || [];
+            
+            // Create new record with 'Pending' status
+            let newRecord = {
+                id: Date.now(),
+                name: document.getElementById('fName').value,
+                state: document.getElementById('fState').value,
+                district: document.getElementById('fDistrict').value,
+                village: document.getElementById('fVillage').value,
+                crop: document.getElementById('fCrop').value,
+                area: document.getElementById('fArea').value,
+                status: 'Pending' // Hidden from public until verified!
+            };
+
+            submissions.push(newRecord);
+            localStorage.setItem('farmerSubmissions', JSON.stringify(submissions));
+
+            // Show success message and auto-hide it after 5 seconds
+            const successEl = document.getElementById('successMsg');
+            successEl.style.display = 'block';
+            this.reset();
+
+            setTimeout(() => {
+                successEl.style.display = 'none';
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

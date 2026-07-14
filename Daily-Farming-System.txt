@@ -1,0 +1,45 @@
+Daily-Farming-System/
+│
+├── 📝 HTML Pages (Core Structural Layouts)
+│   ├── index.html              # Landing page with hero slider, featured cards, and FAQs
+│   ├── about.html              # Mission, Vision, and Benefits of Modern Agriculture
+│   ├── crops.html              # Visual Grid of Crop Cards with dynamic category filters
+│   ├── crop-details.html       # Individual agronomy lookup page (scientific details, yield)
+│   ├── area-statistics.html    # Star Feature: Cascading dropdowns and data tables
+│   ├── farmingtips.html        # Guides on Soil, Irrigation, Crop Rotation
+│   ├── weather.html            # OpenWeather integration template with localized cards
+│   ├── fertilizer.html         # Interactive application guide (NPK calculation formulas)
+│   ├── disease.html            # Pest diagnostic cards (Symptoms, Causes, Remedies)
+│   ├── equipment.html          # Technical machinery grid with utility summaries
+│   ├── schemes.html            # Tabbed interface sorting government schemes by eligibility
+│   ├── gallery.html            # Lightbox-powered image gallery of farm life
+│   ├── contact.html            # Validation-ready contact form + mock map container
+│   └── admin.html              # Suggested Mark-Booster: Simulated Data Engine (CRUD)
+│
+├── 🎨 Cascading Style Sheets (Styles & Presentation Layer)
+│   ├── css/
+│   │   ├── style.css           # UI Foundations: Global resets, Dark Mode variables, Nav/Footer
+│   │   ├── crops.css           # CSS Grid configurations for responsive Crop/Equipment profiles
+│   │   ├── area.css            # Custom layout rules for Dashboard data cards and statistics tables
+│   │   └── responsive.css      # Specialized media queries ensuring flawless mobile scaling
+│   
+└── ⚡ JavaScript Engine (Interaction & Functional Layer)
+    └── js/
+        ├── script.js           # Core framework: Theme engine, navbar state manager
+        ├── area.js             # Data arrays, Cascading filter algorithms, Table renderers
+        ├── search.js           # Lightweight local lookup engine for crops and villages
+        ├── weather.js          # API payload processing or local seasonal backup modules
+        └── admin.js            # In-memory storage management for simulated CRUD mutations
+🔄 Dynamic Component Data Flow Blueprint
+To guarantee a perfect presentation to your project examiner, the system is designed to simulate a dynamic database environment using interconnected frontend scripts:
+
+[ admin.js ] ──► (Simulates CRUD Input) ──┐
+                                          ▼
+[ area.js ]  ──► (Central Local Data) ───► [ UI View Elements ]
+                                          ▲
+[ search.js ] ──► (Filters JSON Array) ───┘
+State Injection: Central storage objects hold all crop and area-wise details.
+
+Filtering Node: Dropdown states (change event listeners) extract localized objects dynamically based on geographic tags.
+
+DOM Painting: Layout generators use template literals to clear old elements and append fresh rows cleanly without reloading the browser.

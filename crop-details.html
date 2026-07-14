@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Details - Daily Farming Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* ==========================================================================
+           Google Translate UI Fixes & Designer Highlight (Directly embedded)
+           ========================================================================== */
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
+        .goog-te-gadget-simple {
+            background-color: var(--bg-surface) !important;
+            border: 1px solid var(--border-color) !important;
+            padding: 6px 10px !important;
+            border-radius: 25px !important;
+            font-size: 0.9rem !important;
+            font-family: 'Inter', sans-serif !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        .goog-te-gadget-simple span { color: var(--text-main) !important; }
+        .goog-te-gadget-icon { display: none !important; }
+
+        .designer-highlight {
+            color: var(--accent-color);
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: rgba(230, 126, 34, 0.15);
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .designer-highlight:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(230, 126, 34, 0.3);
+        }
+
+        /* ==========================================================================
+           Dynamic Hero Section & Layout
+           ========================================================================== */
+        .crop-hero {
+            background-color: var(--primary-dark);
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: multiply;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            margin-bottom: 3rem;
+            transition: background-image 0.5s ease;
+        }
+
+        .crop-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-transform: capitalize;
+        }
+
+        .crop-hero p {
+            font-size: 1.2rem;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        /* Layout Container */
+        .details-container {
+            max-width: 1200px;
+            margin: 0 auto 4rem auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        /* Quick Facts Sidebar (Left) */
+        .quick-facts {
+            background-color: var(--bg-surface);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            height: fit-content;
+        }
+
+        .quick-facts h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .fact-item {
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .fact-icon {
+            font-size: 1.5rem;
+        }
+
+        .fact-text strong {
+            display: block;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .fact-text span {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Agronomy Details (Right) */
+        .agronomy-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .detail-card {
+            background-color: var(--bg-surface);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .detail-card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .detail-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .grid-item {
+            background-color: var(--bg-primary);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .grid-item h4 {
+            color: var(--text-main);
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .grid-item p {
+            font-size: 0.95rem;
+        }
+
+        /* Error State */
+        .error-state {
+            text-align: center;
+            padding: 100px 20px;
+            display: none;
+        }
+        
+        .btn-back {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .details-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">🌱 AgroSystem</a>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="crops.html" class="active">Crops</a></li>
+                <li><a href="area-statistics.html">Area Stats</a></li>
+                <li><a href="farmingtips.html">Tips</a></li>
+                <li><a href="weather.html">Weather</a></li>
+                <li><a href="disease.html">Pest & Disease</a></li>
+                <li><a href="schemes.html">Schemes</a></li>
+                <li><button class="btn-theme" id="themeToggle">🌙 Dark Mode</button></li>
+                
+                <li style="display: flex; align-items: center;">
+                    <div id="google_translate_element"></div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="errorState" class="error-state">
+        <h2>🌾 Crop Not Found</h2>
+        <p>We couldn't find the details for the requested crop. Please select a crop from the database.</p>
+        <a href="crops.html" class="btn-back">← Back to Crop Library</a>
+    </section>
+
+    <div id="mainContent" style="display: none;">
+        
+        <section class="crop-hero" id="cropHero">
+            <h1 id="cropName">Crop Name</h1>
+            <p id="scientificName">Scientific Name</p>
+        </section>
+
+        <section class="details-container">
+            
+            <aside class="quick-facts">
+                <h3>Environmental Needs</h3>
+                
+                <div class="fact-item">
+                    <div class="fact-icon">🌤️</div>
+                    <div class="fact-text">
+                        <strong>Suitable Season</strong>
+                        <span id="cropSeason">-</span>
+                    </div>
+                </div>
+                
+                <div class="fact-item">
+                    <div class="fact-icon">🟤</div>
+                    <div class="fact-text">
+                        <strong>Soil Type</strong>
+                        <span id="cropSoil">-</span>
+                    </div>
+                </div>
+                
+                <div class="fact-item">
+                    <div class="fact-icon">🌡️</div>
+                    <div class="fact-text">
+                        <strong>Temperature</strong>
+                        <span id="cropTemp">-</span>
+                    </div>
+                </div>
+                
+                <div class="fact-item">
+                    <div class="fact-icon">💧</div>
+                    <div class="fact-text">
+                        <strong>Water Requirement</strong>
+                        <span id="cropWater">-</span>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="agronomy-details">
+                
+                <div class="detail-card">
+                    <h3>Cultivation & Agronomy</h3>
+                    <p id="cropDescription">Detailed description goes here...</p>
+                    
+                    <div class="detail-grid">
+                        <div class="grid-item">
+                            <h4>🌱 Seed Rate</h4>
+                            <p id="cropSeedRate">-</p>
+                        </div>
+                        <div class="grid-item">
+                            <h4>🧪 Fertilizer (NPK)</h4>
+                            <p id="cropFertilizer">-</p>
+                        </div>
+                        <div class="grid-item">
+                            <h4>⏱️ Harvest Time</h4>
+                            <p id="cropHarvest">-</p>
+                        </div>
+                        <div class="grid-item">
+                            <h4>📦 Avg. Yield (Per Acre)</h4>
+                            <p id="cropYield">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <h3>Pest & Disease Management</h3>
+                    <p><strong>Common Diseases:</strong> <span id="cropDiseases">-</span></p>
+                    <p style="margin-top: 10px;"><strong>Pest Control:</strong> <span id="cropPest">-</span></p>
+                </div>
+
+                <div class="detail-card">
+                    <h3>Market Uses</h3>
+                    <p id="cropMarket">-</p>
+                </div>
+
+            </main>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Daily Farming Management System. Designed by <span class="designer-highlight">"VIROXA"</span></p>
+    </footer>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', 
+                includedLanguages: 'hi,mr,pa,gu,bn,te,ta,kn,en', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="js/script.js"></script>
+
+    <script>
+        // Expanded authentic crop agronomy database
+        const cropDatabase = {
+            "wheat": {
+                name: "Wheat",
+                scientific: "Triticum aestivum",
+                image: "url('https://images.unsplash.com/photo-1586201375761-83865001e8ac?auto=format&fit=crop&w=1920&q=80')",
+                season: "Rabi (Winter)",
+                soil: "Well-drained fertile loamy and clay loam soils",
+                temp: "10°C to 15°C (Sowing), 21°C to 26°C (Harvest)",
+                water: "50-75 cm annual irrigation baseline",
+                description: "A primary rabi staple across the Gangetic plains of UP and Bihar, demanding bright sunshine during kernel development.",
+                seedRate: "40-45 kg per Acre",
+                fertilizer: "NPK 120:60:40 kg/ha standard ratio",
+                harvest: "4 to 5 Months (March - May)",
+                yield: "18 to 22 Quintals per Acre",
+                diseases: "Yellow Rust, Loose Smut, Powdery Mildew",
+                pest: "Aphids, Termites; treat with Imidacloprid if thresholds breach.",
+                market: "MSP procurement, local Mandis, flour milling processing units."
+            },
+            "rice": {
+                name: "Rice (Paddy)",
+                scientific: "Oryza sativa",
+                image: "url('https://images.unsplash.com/photo-1599839619722-39751411ea63?auto=format&fit=crop&w=1920&q=80')",
+                season: "Kharif (Monsoon)",
+                soil: "Heavy clay or alluvial loams that retain surface moisture",
+                temp: "22°C to 32°C with abundant clear sunlight",
+                water: "150-300 cm water depth parameters",
+                description: "The primary food crop of Bihar and Eastern UP. Cultivated predominantly under transplantation cycles.",
+                seedRate: "20-25 kg per Acre (Nursery method)",
+                fertilizer: "NPK 100:50:50 kg/ha baseline split",
+                harvest: "90 to 150 Days depending on variety length",
+                yield: "22 to 26 Quintals per Acre",
+                diseases: "Paddy Blast, Bacterial Leaf Blight, Sheath Rot",
+                pest: "Brown Plant Hopper (BPH), Stem Borer; apply Cartap Hydrochloride.",
+                market: "FCI dynamic allocation, primary state agricultural cooperative mandis."
+            },
+            "maize": {
+                name: "Maize (Corn)",
+                scientific: "Zea mays",
+                image: "url('https://images.unsplash.com/photo-1601314167099-232775b3d6fd?auto=format&fit=crop&w=1920&q=80')",
+                season: "Kharif / Pre-Rabi",
+                soil: "Deep, fertile alluvial soils, well-drained plain loams",
+                temp: "21°C to 27°C non-frost cycles",
+                water: "60-100 cm rainfall profiles",
+                description: "Highly flexible cereal utilized extensively as food, poultry feed stocks, and starch manufacturing inputs.",
+                seedRate: "8-10 kg per Acre",
+                fertilizer: "NPK 120:60:40 kg/ha optimal profiling",
+                harvest: "3 to 4 Months",
+                yield: "15 to 24 Quintals per Acre",
+                diseases: "Turcicum Leaf Blight, Downy Mildew",
+                pest: "Fall Armyworm; apply Emamectin Benzoate targeted applications.",
+                market: "Starch processing conglomerates, poultry feed manufacturers, local mandis."
+            },
+            "sugarcane": {
+                name: "Sugarcane",
+                scientific: "Saccharum officinarum",
+                image: "url('https://images.unsplash.com/photo-1506465492482-1d5d5904d0af?auto=format&fit=crop&w=1920&q=80')",
+                season: "Perennial / Annual Cash Crop",
+                soil: "Deep, rich clay loams retaining optimal mineral levels",
+                temp: "21°C to 27°C with humid development windows",
+                water: "150-250 cm high irrigation demands",
+                description: "The premier industrial cash crop of Western Uttar Pradesh and North Bihar, fueling extensive sugar processing infrastructure.",
+                seedRate: "35,000 to 40,000 sets per Acre",
+                fertilizer: "NPK 250:115:115 kg/ha high intensity regime",
+                harvest: "10 to 14 Months operational cycle",
+                yield: "300 to 400 Quintals per Acre",
+                diseases: "Red Rot Fungal Infection, Smut, Wilt",
+                pest: "Top Borer, Root Borers; prioritize clean seed setts selection.",
+                market: "Direct dispatch to designated sugar mills via state FRP quotas."
+            },
+            "cotton": {
+                name: "Cotton",
+                scientific: "Gossypium hirsutum",
+                image: "url('https://images.unsplash.com/photo-1594911494819-27038e92f768?auto=format&fit=crop&w=1920&q=80')",
+                season: "Kharif (Monsoon)",
+                soil: "Deep black cotton soils (Deccan basalt) or deep alluvial layers",
+                temp: "21°C to 30°C; requires minimum 180 frost-free days",
+                water: "50-100 cm balanced irrigation maps",
+                description: "Vital industrial fiber crop grown extensively across specific dry alluvial stretches of Southwest UP and MP plains.",
+                seedRate: "2-3 kg per Acre (Hybrid/Bt variations)",
+                fertilizer: "NPK 100:50:50 kg/ha tracking models",
+                harvest: "6 to 7 Months over progressive picking cycles",
+                yield: "8 to 12 Quintals per Acre",
+                diseases: "Boll Rot, Leaf Spot, Para-wilt configurations",
+                pest: "Pink Bollworm, Whitefly vectors; implement targeted Bt protocols.",
+                market: "Cotton Corporation of India (CCI) purchasing units, textile milling syndicates."
+            },
+            "mustard": {
+                name: "Mustard",
+                scientific: "Brassica juncea",
+                image: "url('https://images.unsplash.com/photo-1580227289569-8080072b22f6?auto=format&fit=crop&w=1920&q=80')",
+                season: "Rabi (Winter)",
+                soil: "Light to medium loamy texturing with adequate drainage",
+                temp: "15°C to 25°C cool dry cycles",
+                water: "30-40 cm low moisture requirement",
+                description: "Principal oilseed of North India. Often intercropped with wheat across UP and Madhya Pradesh systems.",
+                seedRate: "1.5-2 kg per Acre",
+                fertilizer: "NPK 80:40:40 kg/ha + 20 kg Sulphur input",
+                harvest: "110 to 140 Days lifecycle tracking",
+                yield: "6 to 9 Quintals per Acre",
+                diseases: "Alternaria Blight, Downy Mildew, White Rust",
+                pest: "Mustard Aphids; apply Dimethoate sprays before flower density peaks.",
+                market: "Private oil expelling mills, oilseed trading cooperatives."
+            },
+            "groundnut": {
+                name: "Groundnut",
+                scientific: "Arachis hypogaea",
+                image: "url('https://images.unsplash.com/photo-1621213032546-2f08dc6f315a?auto=format&fit=crop&w=1920&q=80')",
+                season: "Kharif (Monsoon)",
+                soil: "Well-drained sandy loam or loose soils for pegging ease",
+                temp: "22°C to 30°C growth baseline",
+                water: "50-70 cm evenly distributed rainfall",
+                description: "Valuable oilseed and legume producing underground pods; demands loose textured soil to allow healthy development.",
+                seedRate: "40-45 kg per Acre (Kernels)",
+                fertilizer: "NPK 20:40:20 kg/ha + Gypsum addition",
+                harvest: "115 to 130 Days field timelines",
+                yield: "7 to 10 Quintals per Acre",
+                diseases: "Tikka Leaf Spot, Collar Rot anomalies",
+                pest: "White Grub infestation vectors; apply Chlorpyriphos to soil layers.",
+                market: "Direct commercial procurement networks, solvent extraction plants."
+            },
+            "finger-millet": {
+                name: "Finger Millet (Ragi)",
+                scientific: "Eleusine coracana",
+                image: "url('https://images.unsplash.com/photo-1622484211148-716598e09141?auto=format&fit=crop&w=1920&q=80')",
+                season: "Kharif (Hill Rainfed)",
+                soil: "Free draining gravelly, sandy, or light red soils",
+                temp: "20°C to 28°C tolerant of temperature flex",
+                water: "35-50 cm drought-resistant threshold",
+                description: "An incredibly hardy climate-resilient millet that acts as a vital food security crop in hilly terrains like Uttarakhand.",
+                seedRate: "4-5 kg per Acre",
+                fertilizer: "NPK 40:20:20 kg/ha basic nutrition profile",
+                harvest: "3.5 to 4 Months duration checks",
+                yield: "8 to 12 Quintals per Acre",
+                diseases: "Finger Millet Blast fungal strains",
+                pest: "Shoot Fly infestations; practice early uniform sowing cycles.",
+                market: "State millet procurement mandates, specialty health food processing channels."
+            },
+            "foxtail-millet": {
+                name: "Foxtail Millet",
+                scientific: "Setaria italica",
+                image: "url('https://images.unsplash.com/photo-1574316071802-0d684efa7bf5?auto=format&fit=crop&w=1920&q=80')",
+                season: "Kharif (Rainfed alternate)",
+                soil: "Light soils, poor skeletal structures, low-nutrient areas",
+                temp: "15°C to 30°C highly resilient parameters",
+                water: "30-45 cm minimalist requirement",
+                description: "Ancient quick-maturing structural cereal crop adapted perfectly to low rainfall and marginal, hilly mountain zones.",
+                seedRate: "3-4 kg per Acre",
+                fertilizer: "NPK 30:15:15 kg/ha low maintenance input",
+                harvest: "80 to 100 Days rapid maturation",
+                yield: "6 to 8 Quintals per Acre",
+                diseases: "Grain Smut, Downy Mildew variants",
+                pest: "Armyworms, Grasshoppers; manage with clean border practices.",
+                market: "E-commerce organic hubs, local mountain cooperatives."
+            },
+            "barley": {
+                name: "Barley",
+                scientific: "Hordeum vulgare",
+                image: "url('https://images.unsplash.com/photo-1531265726415-a2e99a5bf078?auto=format&fit=crop&w=1920&q=80')",
+                season: "Rabi (High Altitude / Marginal)",
+                soil: "Light sandy loams, moderately saline-alkaline soils",
+                temp: "12°C to 18°C growth, needs cool dry ripening",
+                water: "35-50 cm drought-hardy framework",
+                description: "Grown across higher mountain altitudes of Uttarakhand and dry patches of UP. Highly salt-tolerant relative to wheat.",
+                seedRate: "35-40 kg per Acre",
+                fertilizer: "NPK 60:30:20 kg/ha requirements",
+                harvest: "4 Months tracking lines",
+                yield: "12 to 16 Quintals per Acre",
+                diseases: "Net Blotch, Powdery Mildew, Stripe Disease",
+                pest: "Aphids; apply targeted bio-pesticide formulations.",
+                market: "Commercial breweries, animal feed processing units, local mandis."
+            },
+            "black-gram": {
+                name: "Black Gram (Urad)",
+                scientific: "Vigna mungo",
+                image: "url('https://images.unsplash.com/photo-1603048588665-791ca8aea617?auto=format&fit=crop&w=1920&q=80')",
+                season: "Kharif / Zaid (Summer short)",
+                soil: "Deep, well-drained heavy loams or black soils",
+                temp: "25°C to 35°C high temperature tolerance",
+                water: "45-60 cm sensitive to waterlogging",
+                description: "Short-duration pulse that improves soil health by fixing atmospheric nitrogen; highly cultivated in MP and UP systems.",
+                seedRate: "6-8 kg per Acre",
+                fertilizer: "NPK 20:40:20 kg/ha (Low nitrogen due to root nodules)",
+                harvest: "75 to 90 Days rapid window",
+                yield: "4 to 6 Quintals per Acre",
+                diseases: "Yellow Mosaic Virus (YMV), Powdery Mildew",
+                pest: "Whitefly vector (spreads YMV); treat with systemic seed coatings.",
+                market: "Pulse mill syndicates, retail consumer networks."
+            },
+            "green-gram": {
+                name: "Green Gram (Moong)",
+                scientific: "Vigna radiata",
+                image: "url('https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1920&q=80')",
+                season: "Zaid (Summer Crop) / Kharif",
+                soil: "Well-aerated sandy loam down to deep alluvial structures",
+                temp: "25°C to 35°C thrives in hot, dry summers",
+                water: "35-50 cm highly efficient water usage",
+                description: "Excellent catch crop grown between Rabi harvest and Kharif planting to ensure fields maintain organic vitality.",
+                seedRate: "7-9 kg per Acre",
+                fertilizer: "NPK 15:40:20 kg/ha starter additions",
+                harvest: "65 to 75 Days shortest runtime",
+                yield: "3 to 5 Quintals per Acre",
+                diseases: "Leaf Crinkle, Cercospora Leaf Spot",
+                pest: "Pod Borers, Thrips; managed with multi-tier cropping systems.",
+                market: "National consumer cooperatives, wholesale pulse mandis."
+            },
+            "pigeon-pea": {
+                name: "Pigeon Pea (Arhar / Tur)",
+                scientific: "Cajanus cajan",
+                image: "url('https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=1920&q=80')",
+                season: "Kharif (Long Duration Deep Root)",
+                soil: "Deep alluvial or black soils with no subsoil hardpan",
+                temp: "20°C to 35°C extensive developmental windows",
+                water: "60-80 cm highly drought-resistant once anchored",
+                description: "A major commercial pulse crop in Central India and UP, taking up to 6-8 months to complete maturity cycles.",
+                seedRate: "5-6 kg per Acre",
+                fertilizer: "NPK 20:50:20 kg/ha deep application",
+                harvest: "160 to 200 Days extensive span",
+                yield: "6 to 8 Quintals per Acre",
+                diseases: "Fusarium Wilt, Phytophthora Blight",
+                pest: "Pod Fly, Helicoverpa armigera; spray with bio-agents during flowering.",
+                market: "Dal processing mills, governmental buffer stock procurement."
+            },
+            "rajma": {
+                name: "Rajma (Kidney Beans)",
+                scientific: "Phaseolus vulgaris",
+                image: "url('https://images.unsplash.com/photo-1551248429-4043b9a73bf2?auto=format&fit=crop&w=1920&q=80')",
+                season: "Rabi (Plains) / Kharif (Hills)",
+                soil: "Light, deep fertile silt loams with perfect drainage profile",
+                temp: "15°C to 25°C extremely sensitive to frost or heavy heat",
+                water: "60-70 cm critical branching irrigation",
+                description: "Premium high-value pulse grown in hilly terrain or under specialized winter management in the plains.",
+                seedRate: "30-35 kg per Acre (Larger seed matrix)",
+                fertilizer: "NPK 100:60:40 kg/ha (Demands higher Nitrogen than other pulses)",
+                harvest: "110 to 120 Days tracking",
+                yield: "5 to 7 Quintals per Acre",
+                diseases: "Anthracnose, Root Rot strains",
+                pest: "Stem Fly, Aphids; implement strict cultural field cleaning.",
+                market: "Urban wholesale distributors, direct packaged packaging brands."
+            },
+            "potato": {
+                name: "Potato",
+                scientific: "Solanum tuberosum",
+                image: "url('https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=1920&q=80')",
+                season: "Rabi (Winter Tuber)",
+                soil: "Loose, well-aerated sandy loam rich in organic carbon",
+                temp: "15°C to 20°C optimal for tuberization steps",
+                water: "40-60 cm systematic light waterings",
+                description: "Massive vegetable cash crop in UP (Agra zone) and Bihar. Demands reliable low cold storage supply lines post-harvest.",
+                seedRate: "800-1000 kg Tubers per Acre",
+                fertilizer: "NPK 150:100:120 kg/ha high density food",
+                harvest: "90 to 120 Days depending on early/late strain",
+                yield: "120 to 160 Quintals per Acre",
+                diseases: "Early Blight, Late Blight (Phytophthora)",
+                pest: "Potato Tuber Moth, Aphids; spray Mancozeb as a preventive layer.",
+                market: "Cold storage networks, potato chip manufacturing buyers."
+            },
+            "tomato": {
+                name: "Tomato",
+                scientific: "Solanum lycopersicum",
+                image: "url('https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=1920&q=80')",
+                season: "Multi-Season / Protected / Zaid",
+                soil: "Rich well-drained loams, pH balance 6.0-7.0",
+                temp: "18°C to 28°C avoid extreme direct summer baking",
+                water: "60-80 cm requires precise drip input",
+                description: "Highly perishable vegetable requiring stake support and regular nutrient adjustments for heavy yields.",
+                seedRate: "100-150 grams per Acre (Hybrid nursery setting)",
+                fertilizer: "NPK 120:80:80 kg/ha trace minerals mapping",
+                harvest: "75 Days post transplantation onward over weeks",
+                yield: "150 to 200 Quintals per Acre",
+                diseases: "Tomato Leaf Curl Virus, Early Blight",
+                pest: "Fruit Borer, Whitefly; install yellow sticky cards across fields.",
+                market: "Local wholesale vegetable markets, sauce manufacturing facilities."
+            },
+            "onion": {
+                name: "Onion",
+                scientific: "Allium cepa",
+                image: "url('https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=1920&q=80')",
+                season: "Rabi / Late Kharif transitions",
+                soil: "Silty loams with clear access to organic composts",
+                temp: "15°C to 25°C changing to hot dry conditions for bulb maturity",
+                water: "50-60 cm sensitive to moisture stress at bulb stage",
+                description: "Crucial commercial vegetable with major production clusters in Maharashtra, MP, and parts of Bihar.",
+                seedRate: "3-4 kg per Acre (Nursery tracking setup)",
+                fertilizer: "NPK 100:50:80 kg/ha + Sulphur additions",
+                harvest: "4 to 5 Months total lifecycle tracking",
+                yield: "100 to 120 Quintals per Acre",
+                diseases: "Purple Blotch, Downy Mildew",
+                pest: "Onion Thrips; spray with systemic insecticides if counts elevate.",
+                market: "National supply networks, storage warehousing centers."
+            },
+            "bitter-gourd": {
+                name: "Bitter Gourd",
+                scientific: "Momordica charantia",
+                image: "url('https://images.unsplash.com/photo-1590497556094-11883395c862?auto=format&fit=crop&w=1920&q=80')",
+                season: "Summer (Zaid) / Kharif Cucurbit",
+                soil: "Well-drained sandy loam with riverbed or valley silt additions",
+                temp: "24°C to 35°C thrives in warm climates",
+                water: "50-70 cm regular interval hydration",
+                description: "High-value vining cucurbit vegetable grown extensively over trellis structures to produce straight, unblemished fruits.",
+                seedRate: "1.5-2 kg per Acre",
+                fertilizer: "NPK 80:60:60 kg/ha split dosage setup",
+                harvest: "55 to 65 Days post-sowing through multiple pickings",
+                yield: "40 to 60 Quintals per Acre",
+                diseases: "Downy Mildew, Powdery Mildew",
+                pest: "Fruit Fly (Bactrocera); deploy pheromone traps uniformly.",
+                market: "Fresh local market yards, direct urban supply chains."
+            },
+            "ginger": {
+                name: "Ginger",
+                scientific: "Zingiber officinale",
+                image: "url('https://images.unsplash.com/photo-1599599810769-bcde5a160d32?auto=format&fit=crop&w=1920&q=80')",
+                season: "Kharif / Long Duration Rhizome",
+                soil: "Rich humus loams, loose soils with zero water pooling",
+                temp: "20°C to 30°C demands partial shade conditions",
+                water: "150-200 cm high moisture, prefers overhead rain maps",
+                description: "Major premium rhizome spice crop. Thrives beautifully in low-temperature mountain valleys and rainfed hill forests.",
+                seedRate: "600-800 kg Rhizomes per Acre",
+                fertilizer: "NPK 120:80:120 kg/ha organic heavy feeding",
+                harvest: "8 to 9 Months till leaf yellowing indicators",
+                yield: "60 to 80 Quintals per Acre (Fresh weight)",
+                diseases: "Soft Rot, Bacterial Wilt",
+                pest: "Rhizome Scale, Shoot Borer; ensure solarized soil preparation.",
+                market: "Spice extraction companies, dry ginger exporters."
+            },
+            "turmeric": {
+                name: "Turmeric",
+                scientific: "Curcuma longa",
+                image: "url('https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=1920&q=80')",
+                season: "Kharif / Annual Shrub",
+                soil: "Loose clay loam or alluvial soils containing high organic matter",
+                temp: "20°C to 35°C high humidity preferences",
+                water: "120-160 cm structural irrigation tracking",
+                description: "Major cash spice crop. Requires systematic rhizome boiling and drying treatment before market placement.",
+                seedRate: "700-900 kg Seed Rhizomes per Acre",
+                fertilizer: "NPK 120:60:100 kg/ha balanced split",
+                harvest: "7 to 9 Months duration indexes",
+                yield: "80 to 100 Quintals per Acre (Fresh rhizomes)",
+                diseases: "Rhizome Rot, Leaf Blotch profiles",
+                pest: "Thrips, Leaf Roller insects; use neem-based formulations.",
+                market: "Industrial processing mills, global spice exporters."
+            }
+        };
+
+        // URL Processing Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const cropKey = urlParams.get('crop');
+            const errorState = document.getElementById('errorState');
+            const mainContent = document.getElementById('mainContent');
+
+            if (cropKey && cropDatabase[cropKey.toLowerCase()]) {
+                const data = cropDatabase[cropKey.toLowerCase()];
+                document.getElementById('cropName').textContent = data.name;
+                document.getElementById('scientificName').textContent = data.scientific;
+                document.getElementById('cropHero').style.backgroundImage = data.image;
+                document.getElementById('cropSeason').textContent = data.season;
+                document.getElementById('cropSoil').textContent = data.soil;
+                document.getElementById('cropTemp').textContent = data.temp;
+                document.getElementById('cropWater').textContent = data.water;
+                document.getElementById('cropDescription').textContent = data.description;
+                document.getElementById('cropSeedRate').textContent = data.seedRate;
+                document.getElementById('cropFertilizer').textContent = data.fertilizer;
+                document.getElementById('cropHarvest').textContent = data.harvest;
+                document.getElementById('cropYield').textContent = data.yield;
+                document.getElementById('cropDiseases').textContent = data.diseases;
+                document.getElementById('cropPest').textContent = data.pest;
+                document.getElementById('cropMarket').textContent = data.market;
+                mainContent.style.display = 'block';
+            } else {
+                errorState.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

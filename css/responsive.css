@@ -1,0 +1,217 @@
+/* ==========================================================================
+   Responsive Breakpoints for AgroSystem
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Large Tablets & Smaller Laptops (Max Width: 1200px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1200px) {
+    /* Add slightly more padding to the sides so content doesn't touch screen edges */
+    section, .section-container, .dashboard-container, .contact-container {
+        padding: 0 30px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Tablets (Portrait & Landscape) (Max Width: 992px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 992px) {
+    /* Hero Sections (index.html, crops.html, etc.) */
+    .hero {
+        padding: 80px 20px;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    /* About Page Split Layout */
+    .split-layout {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .split-image {
+        width: 100%;
+    }
+
+    /* Contact Page Layout */
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    /* Admin Sidebar Layout Adjustment */
+    .sidebar {
+        width: 200px;
+    }
+    .main-content {
+        margin-left: 200px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Devices (Phones) (Max Width: 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    /* Global Typography Scaling */
+    h1 { font-size: 2rem !important; }
+    h2 { font-size: 1.6rem !important; }
+    h3 { font-size: 1.3rem !important; }
+    p { font-size: 0.95rem; }
+
+    /* Page Headers */
+    .page-header {
+        padding: 40px 15px;
+    }
+
+    /* Search Bar (Home & Weather) */
+    .search-bar, .weather-search {
+        flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .search-bar input, .weather-search input {
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    .search-bar button, .weather-search button {
+        width: 100%;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
+    /* Area Statistics Filter Group */
+    .filter-group {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+    }
+
+    /* Crop Details Page */
+    .details-container {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-facts {
+        margin-bottom: 2rem;
+    }
+
+    /* Admin Dashboard Overrides for Mobile */
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .sidebar-menu {
+        display: flex;
+        overflow-x: auto; /* Allow horizontal scroll of menu on mobile */
+        padding: 10px;
+        white-space: nowrap;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    /* Data Tables (Ensure they scroll horizontally instead of squishing) */
+    .table-container {
+        padding: 1rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+    
+    table {
+        min-width: 600px; /* Force minimum width to trigger horizontal scroll */
+    }
+
+    /* Modals (Admin & Disease) */
+    .modal-content {
+        width: 95%;
+        margin: 20px auto;
+        padding: 20px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Small Mobile Devices (Max Width: 576px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 576px) {
+    /* Grid adjustments to strictly single column */
+    .grid-cards, 
+    .crop-grid, 
+    .equipment-grid, 
+    .tips-grid, 
+    .schemes-grid, 
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    /* Meta Summary Cards (Area Stats) */
+    .meta-cards {
+        grid-template-columns: 1fr;
+    }
+
+    /* Fertilizer Calculator Form */
+    .calc-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .input-group {
+        width: 100%;
+    }
+
+    .btn-calc {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    /* Tabs (Schemes) */
+    .tabs-nav {
+        flex-direction: column;
+        align-items: stretch;
+        border-bottom: none;
+    }
+
+    .tab-btn {
+        border-radius: 8px;
+        margin-bottom: 5px;
+        background-color: var(--bg-surface);
+        border: 1px solid var(--border-color);
+    }
+
+    .tab-btn.active::after {
+        display: none; /* Remove bottom underline effect for stacked mobile tabs */
+    }
+    
+    .tab-btn.active {
+        border-left: 4px solid var(--primary-color);
+    }
+
+    /* Weather Dashboard */
+    .temp-display {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .temp-value {
+        font-size: 3rem;
+    }
+}

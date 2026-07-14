@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farming Tips - Daily Farming Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(39, 174, 96, 0.85), rgba(44, 62, 80, 0.85)), url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Tips Container */
+        .tips-container {
+            max-width: 1200px;
+            margin: 0 auto 4rem auto;
+            padding: 0 20px;
+        }
+
+        /* CSS Grid for Tips */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Individual Tip Card */
+        .tip-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Top Color Accent Line */
+        .tip-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--primary-color);
+        }
+
+        .tip-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background-color: var(--bg-primary);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .tip-card h3 {
+            color: var(--primary-dark);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .tip-card p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .tip-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tip-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .tip-list li::before {
+            content: '✔️';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 0.8rem;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">🌱 AgroSystem</a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="crops.html">Crops</a></li>
+                <li><a href="area-statistics.html">Area Stats</a></li>
+                <li><a href="farmingtips.html" class="active">Tips</a></li>
+                <li><a href="weather.html">Weather</a></li>
+                <li><a href="schemes.html">Schemes</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><button class="btn-theme" id="themeToggle">🌙 Dark Mode</button></li>
+                
+                <li style="display: flex; align-items: center;">
+                    <div id="google_translate_element"></div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <h1>Modern Farming Tips</h1>
+        <p>Adopt sustainable, scientifically proven agricultural practices to maximize your crop yield while protecting the environment.</p>
+    </section>
+
+    <section class="tips-container">
+        <div class="tips-grid">
+            
+            <div class="tip-card">
+                <div class="tip-icon">🧪</div>
+                <h3>Soil Testing</h3>
+                <p>Testing your soil is the first step to successful farming. It tells you the exact nutrients your soil lacks, preventing over-fertilization.</p>
+                <ul class="tip-list">
+                    <li>Test soil every 2-3 years.</li>
+                    <li>Check pH levels (Ideal: 6.0 - 7.5).</li>
+                    <li>Optimize NPK ratios based on reports.</li>
+                </ul>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-icon">🔄</div>
+                <h3>Crop Rotation</h3>
+                <p>Growing the same crop year after year depletes specific nutrients and encourages pests. Rotating crops maintains soil health.</p>
+                <ul class="tip-list">
+                    <li>Plant legumes (beans/peas) after cereals to fix nitrogen.</li>
+                    <li>Breaks pest and disease cycles naturally.</li>
+                    <li>Reduces reliance on chemical fertilizers.</li>
+                </ul>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-icon">💧</div>
+                <h3>Drip Irrigation</h3>
+                <p>Drip irrigation delivers water directly to the roots of the plants, saving massive amounts of water compared to flood irrigation.</p>
+                <ul class="tip-list">
+                    <li>Saves up to 50% of water.</li>
+                    <li>Reduces weed growth (dry surface areas).</li>
+                    <li>Allows for 'Fertigation' (liquid fertilizers).</li>
+                </ul>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-icon">🍂</div>
+                <h3>Compost Making</h3>
+                <p>Transform your farm and household organic waste into nutrient-rich "black gold" to improve soil structure and water retention.</p>
+                <ul class="tip-list">
+                    <li>Mix green waste (nitrogen) with brown waste (carbon).</li>
+                    <li>Keep the pile moist and aerated.</li>
+                    <li>Use vermicomposting for faster results.</li>
+                </ul>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-icon">🛡️</div>
+                <h3>Pesticide Safety</h3>
+                <p>Chemical pesticides can be harmful if not handled correctly. Always prioritize safety and precise dosages.</p>
+                <ul class="tip-list">
+                    <li>Always wear protective gear (gloves, masks).</li>
+                    <li>Never spray against the wind direction.</li>
+                    <li>Observe the correct waiting period before harvest.</li>
+                </ul>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-icon">🌱</div>
+                <h3>Seed Selection</h3>
+                <p>Your harvest is only as good as your seeds. Choosing High-Yielding Varieties (HYV) is critical for a profitable season.</p>
+                <ul class="tip-list">
+                    <li>Buy certified seeds from reliable sources.</li>
+                    <li>Treat seeds with bio-fungicides before sowing.</li>
+                    <li>Choose drought or disease-resistant varieties.</li>
+                </ul>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-icon">🌿</div>
+                <h3>Weed Control</h3>
+                <p>Weeds steal nutrients, water, and sunlight from your primary crops. Early management prevents them from taking over.</p>
+                <ul class="tip-list">
+                    <li>Use mulching to block sunlight from weed seeds.</li>
+                    <li>Practice shallow hoeing regularly.</li>
+                    <li>Use selective herbicides only when necessary.</li>
+                </ul>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-icon">🌧️</div>
+                <h3>Water Conservation</h3>
+                <p>With unpredictable rainfall, preserving every drop of water is essential for dry spells.</p>
+                <ul class="tip-list">
+                    <li>Build farm ponds for rainwater harvesting.</li>
+                    <li>Use organic mulch to reduce soil evaporation.</li>
+                    <li>Schedule irrigation during early mornings or late evenings.</li>
+                </ul>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-icon">🐞</div>
+                <h3>Organic Farming</h3>
+                <p>Moving towards organic inputs restores the natural ecosystem of your farm and yields premium-priced produce.</p>
+                <ul class="tip-list">
+                    <li>Use Neem oil or cow urine extracts for pest control.</li>
+                    <li>Introduce beneficial insects (like ladybugs).</li>
+                    <li>Rely on Farm Yard Manure (FYM) over Urea.</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Daily Farming Management System. Designed by <span class="designer-highlight">"VIROXA"</span></p>
+    </footer>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', 
+                includedLanguages: 'hi,mr,pa,gu,bn,te,ta,kn,en', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

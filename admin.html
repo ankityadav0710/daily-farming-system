@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - AgroSystem</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* ==========================================================================
+           Google Translate & Branding Fixes
+           ========================================================================== */
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
+        .goog-te-gadget-simple {
+            background-color: var(--bg-surface) !important;
+            border: 1px solid var(--border-color) !important;
+            padding: 6px 10px !important;
+            border-radius: 25px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        .goog-te-gadget-simple span { color: var(--text-main) !important; }
+        .goog-te-gadget-icon { display: none !important; }
+
+        .designer-highlight {
+            color: var(--accent-color);
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: rgba(230, 126, 34, 0.15);
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .designer-highlight:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(230, 126, 34, 0.3);
+        }
+
+        /* Admin Layout */
+        body { background-color: var(--bg-primary); display: flex; min-height: 100vh; margin: 0; }
+
+        /* Sidebar */
+        .sidebar { width: 250px; background-color: var(--bg-surface); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; box-shadow: 2px 0 5px rgba(0,0,0,0.05); position: fixed; height: 100vh; overflow-y: auto; }
+        .sidebar-header { padding: 20px; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .sidebar-header h2 { color: var(--primary-color); font-size: 1.5rem; }
+        .sidebar-menu { list-style: none; padding: 20px 0; }
+        .sidebar-menu li { padding: 15px 25px; cursor: pointer; color: var(--text-muted); font-weight: 600; transition: var(--transition); display: flex; align-items: center; gap: 10px; }
+        .sidebar-menu li:hover, .sidebar-menu li.active { background-color: rgba(46, 204, 113, 0.1); color: var(--primary-dark); border-left: 4px solid var(--primary-color); }
+        .sidebar-menu li a { text-decoration: none; color: inherit; width: 100%; }
+
+        /* Main Content */
+        .main-content { flex-grow: 1; margin-left: 250px; padding: 30px; display: flex; flex-direction: column; min-height: 100vh; }
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .dashboard-header h1 { color: var(--text-main); }
+        .header-actions { display: flex; gap: 15px; align-items: center; }
+
+        /* Stats Cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .stat-card { background-color: var(--bg-surface); padding: 20px; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border-color); display: flex; align-items: center; gap: 15px; }
+        .stat-icon { font-size: 2rem; background-color: rgba(46, 204, 113, 0.1); padding: 15px; border-radius: 10px; }
+        .stat-info h3 { font-size: 1.8rem; color: var(--text-main); }
+        .stat-info p { color: var(--text-muted); font-size: 0.9rem; font-weight: bold; }
+
+        /* Data Table Section */
+        .data-section { background-color: var(--bg-surface); border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border-color); padding: 20px; margin-bottom: 30px; }
+        .data-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .btn-add { background-color: var(--primary-color); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: var(--transition); }
+        .btn-add:hover { background-color: var(--primary-dark); }
+
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 15px; border-bottom: 1px solid var(--border-color); }
+        th { background-color: var(--bg-primary); color: var(--text-main); }
+        td { color: var(--text-muted); }
+        
+        .action-btn { border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-right: 5px; color: white; }
+        .btn-edit { background-color: #f39c12; }
+        .btn-delete { background-color: #e74c3c; }
+        .btn-approve { background-color: #2ecc71; }
+
+        /* Modal / Form Overlay */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: var(--bg-surface); padding: 30px; border-radius: 12px; width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .modal-content h3 { margin-bottom: 20px; color: var(--primary-dark); }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--text-main); }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+        .btn-cancel { background-color: #95a5a6; color: white; padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer; }
+        .btn-save { background-color: var(--primary-color); color: white; padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer; }
+
+        /* Footer */
+        footer { margin-top: auto; padding: 20px; text-align: center; border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>⚙️ Admin Panel</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="active">📊 Dashboard (Crops)</li>
+            <li><a href="area-statistics.html">🗺️ View Area Stats</a></li>
+            <li><a href="index.html">🌐 View Public Site</a></li>
+            <li>🚪 Logout</li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        
+        <div class="dashboard-header">
+            <h1>Crop Database Management</h1>
+            <div class="header-actions">
+                <!-- Translate Widget for Admin -->
+                <div id="google_translate_element"></div>
+                <button class="btn-theme" id="themeToggle">🌙 Dark Mode</button>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🌾</div>
+                <div class="stat-info">
+                    <h3 id="totalCropsWidget">0</h3>
+                    <p>Total Crops Managed</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👨‍🌾</div>
+                <div class="stat-info">
+                    <h3>1,240</h3>
+                    <p>Registered Farmers</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Farmer Approvals Table -->
+        <div class="data-section" style="border-left: 5px solid #f39c12;">
+            <div class="data-header">
+                <h2>Pending Farmer Approvals</h2>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Farmer Name</th>
+                        <th>Location (Village, District)</th>
+                        <th>Crop Planted</th>
+                        <th>Area (Acres)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="verificationTableBody">
+                    <!-- Javascript will inject pending data here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Existing Crop Database Table -->
+        <div class="data-section">
+            <div class="data-header">
+                <h2>Current Crops List</h2>
+                <button class="btn-add" id="openModalBtn">+ Add New Crop</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Crop Name</th>
+                        <th>Category</th>
+                        <th>Season</th>
+                        <th>Avg Yield (Per Acre)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="cropTableBody">
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Brand Footer -->
+        <footer>
+            <p>&copy; 2026 Daily Farming Management System. Designed by <span class="designer-highlight">"VIROXA"</span></p>
+        </footer>
+
+    </main>
+
+    <!-- Modal Form -->
+    <div class="modal" id="cropModal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Add New Crop</h3>
+            <form id="cropForm">
+                <input type="hidden" id="cropId"> 
+                <div class="form-group">
+                    <label>Crop Name</label>
+                    <input type="text" id="cropName" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="cropCategory" required>
+                        <option value="Cereal">Cereal</option>
+                        <option value="Cash Crop">Cash Crop</option>
+                        <option value="Vegetable">Vegetable</option>
+                        <option value="Oilseed">Oilseed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Season</label>
+                    <input type="text" id="cropSeason" placeholder="e.g., Kharif, Rabi" required>
+                </div>
+                <div class="form-group">
+                    <label>Average Yield (Quintals)</label>
+                    <input type="number" id="cropYield" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="closeModalBtn">Cancel</button>
+                    <button type="submit" class="btn-save">Save Record</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', 
+                includedLanguages: 'hi,mr,pa,gu,bn,te,ta,kn,en', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="js/script.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
+```[cite: 18]

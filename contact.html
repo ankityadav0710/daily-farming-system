@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - AgroSystem</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* ==========================================================================
+           Google Translate UI Fixes & Designer Highlight
+           ========================================================================== */
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
+        .goog-te-gadget-simple {
+            background-color: var(--bg-surface) !important;
+            border: 1px solid var(--border-color) !important;
+            padding: 6px 10px !important;
+            border-radius: 25px !important;
+            font-size: 0.9rem !important;
+            font-family: 'Inter', sans-serif !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        .goog-te-gadget-simple span { color: var(--text-main) !important; }
+        .goog-te-gadget-icon { display: none !important; }
+
+        .designer-highlight {
+            color: var(--accent-color);
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: rgba(230, 126, 34, 0.15);
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .designer-highlight:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(230, 126, 34, 0.3);
+        }
+
+        /* ==========================================================================
+           Contact Page Styles
+           ========================================================================== */
+        .page-header {
+            background: linear-gradient(rgba(46, 204, 113, 0.85), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1499529112087-3cb3b73cec95?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto 4rem auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        /* Left Side: Info & Map */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .info-card {
+            background-color: var(--bg-surface);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .info-card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-list li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            color: var(--text-main);
+            font-size: 1.05rem;
+        }
+
+        .info-icon {
+            font-size: 1.5rem;
+            background-color: var(--bg-primary);
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: var(--primary-color);
+        }
+
+        .map-container {
+            width: 100%;
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Right Side: Contact Form */
+        .contact-form-wrapper {
+            background-color: var(--bg-surface);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            height: fit-content;
+        }
+
+        .contact-form-wrapper h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Success Message Alert */
+        .success-message {
+            display: none;
+            background-color: rgba(46, 204, 113, 0.1);
+            color: var(--primary-dark);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            margin-top: 20px;
+            font-weight: 600;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">🌱 AgroSystem</a>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="crops.html">Crops</a></li>
+                <li><a href="area-statistics.html">Area Stats</a></li>
+                <li><a href="farmingtips.html">Tips</a></li>
+                <li><a href="weather.html">Weather</a></li>
+                <li><a href="schemes.html">Schemes</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+                <li><button class="btn-theme" id="themeToggle">🌙 Dark Mode</button></li>
+                
+                <!-- Navbar Translate Widget -->
+                <li style="display: flex; align-items: center;">
+                    <div id="google_translate_element"></div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <h1>Get in Touch</h1>
+        <p>Have questions about crops, weather, or our area statistics? Send us a message and our agricultural experts will assist you.</p>
+    </section>
+
+    <section class="contact-container">
+        
+        <div class="contact-info">
+            <div class="info-card">
+                <h3>Contact Information</h3>
+                <ul class="info-list">
+                    <li>
+                        <div class="info-icon">📍</div>
+                        <span>123 Krishi Bhavan, Agriculture Wing<br>Prayagraj, Uttar Pradesh, India 110001</span>
+                    </li>
+                    <li>
+                        <div class="info-icon">📞</div>
+                        <span>+91 8303054817 <br> Toll-Free: 100 1800 1800 (Kisan Call Center)</span>
+                    </li>
+                    <li>
+                        <div class="info-icon">✉️</div>
+                        <span>support@agrosystem.com</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m3!1d14008.20456102196!2d77.15174542289657!3d28.62822453673523!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d02c388656d09%3A0x7d6a2f3f9f75a7c5!2sIndian%20Agricultural%20Research%20Institute%2C%20New%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1690000000000!5m2!1sen!2sin" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
+        <div class="contact-form-wrapper">
+            <h3>Send us a Message</h3>
+            <form id="contactForm">
+                
+                <div class="form-group">
+                    <label for="fullName">Full Name <span style="color: red;">*</span></label>
+                    <input type="text" id="fullName" class="form-control" placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label for="mobile">Mobile Number <span style="color: red;">*</span></label>
+                    <input type="tel" id="mobile" class="form-control" placeholder="10-digit mobile number" pattern="[0-9]{10}" title="Please enter exactly 10 digits" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select id="subject" class="form-control">
+                        <option value="general">General Inquiry</option>
+                        <option value="crop">Crop Data Inquiry</option>
+                        <option value="weather">Weather Issue</option>
+                        <option value="feedback">Website Feedback</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Your Message <span style="color: red;">*</span></label>
+                    <textarea id="message" class="form-control" placeholder="How can we help you today?" required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+
+            <div class="success-message" id="successMessage">
+                ✅ Thank you! Your message has been sent successfully. Our team will contact you shortly.
+            </div>
+        </div>
+
+    </section>
+
+    <!-- VIROXA Brand Footer -->
+    <footer>
+        <p>&copy; 2026 Daily Farming Management System. Designed by <span class="designer-highlight">"VIROXA"</span></p>
+    </footer>
+
+    <!-- Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', 
+                includedLanguages: 'hi,mr,pa,gu,bn,te,ta,kn,en', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="js/script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('contactForm');
+            const successMsg = document.getElementById('successMessage');
+
+            form.addEventListener('submit', (e) => {
+                // Prevent actual page reload
+                e.preventDefault();
+
+                // Here you would normally send the data to a backend via fetch()
+                // For the frontend project, we simulate a successful submission.
+
+                // Show success message
+                successMsg.style.display = 'block';
+
+                // Reset the form fields
+                form.reset();
+
+                // Hide the success message after 5 seconds
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>
