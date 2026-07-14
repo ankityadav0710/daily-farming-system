@@ -3,15 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Government Schemes - AgroSystem</title>
+    <title>Government Schemes - Azmith System</title>
     <link rel="stylesheet" href="css/style.css">
     
     <style>
         /* ==========================================================================
-           Google Translate UI Fixes & Designer Highlight
+           SUPER NUKE: Google Translate Banner Killer
            ========================================================================== */
-        .goog-te-banner-frame.skiptranslate { display: none !important; }
-        body { top: 0px !important; }
+        iframe.goog-te-banner-frame, 
+        .goog-te-banner-frame, 
+        .skiptranslate > iframe,
+        .VIpgJd-ZVi9od-aZ2wEe-wOHMyf {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+        }
+        
+        html, body { top: 0px !important; margin-top: 0px !important; position: relative !important; }
+        #goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
+        .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
+
         .goog-te-gadget-simple {
             background-color: var(--bg-surface) !important;
             border: 1px solid var(--border-color) !important;
@@ -22,9 +33,13 @@
             display: flex !important;
             align-items: center !important;
         }
+        
         .goog-te-gadget-simple span { color: var(--text-main) !important; }
         .goog-te-gadget-icon { display: none !important; }
 
+        /* ==========================================================================
+           Designer Highlight & Page Specific Styles
+           ========================================================================== */
         .designer-highlight {
             color: var(--accent-color);
             font-weight: 800;
@@ -43,189 +58,79 @@
             box-shadow: 0 4px 8px rgba(230, 126, 34, 0.3);
         }
 
-        /* ==========================================================================
-           Schemes Page Styles
-           ========================================================================== */
         .page-header {
-            background: linear-gradient(rgba(41, 128, 185, 0.85), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1530836369250-ef71a3f5e481?auto=format&fit=crop&w=1920&q=80') center/cover;
+            background: linear-gradient(rgba(41, 128, 185, 0.85), rgba(44, 62, 80, 0.95)), url('https://images.unsplash.com/photo-1589923188900-85dae523342b?auto=format&fit=crop&w=1920&q=80') center/cover;
             color: white;
             text-align: center;
             padding: 60px 20px;
             margin-bottom: 2rem;
         }
 
-        .page-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .section-container { max-width: 1200px; margin: 0 auto 4rem auto; padding: 0 20px; }
 
-        .schemes-container {
-            max-width: 1200px;
-            margin: 0 auto 4rem auto;
-            padding: 0 20px;
-        }
-
-        /* Tabbed Interface Navigation */
-        .tabs-nav {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 3rem;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 10px;
-        }
-
-        .tab-btn {
-            background: none;
-            border: none;
-            padding: 10px 25px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: var(--transition);
-            border-radius: 8px 8px 0 0;
-            position: relative;
-        }
-
-        .tab-btn:hover {
-            color: var(--primary-color);
-            background-color: var(--bg-surface);
-        }
-
-        .tab-btn.active {
-            color: var(--primary-dark);
-            background-color: var(--bg-surface);
-        }
-
-        .tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -12px;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background-color: var(--primary-color);
-            border-radius: 4px 4px 0 0;
-        }
-
-        /* Schemes Grid */
-        .schemes-grid {
+        .scheme-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
         }
 
-        /* Scheme Cards */
         .scheme-card {
             background-color: var(--bg-surface);
-            border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 2rem;
+            padding: 25px;
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            border: 1px solid var(--border-color);
+            border-top: 4px solid #3498db;
+            transition: transform 0.3s ease;
             display: flex;
             flex-direction: column;
-            animation: fadeIn 0.4s ease-in-out;
         }
-
-        .scheme-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        .scheme-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-        }
-
-        .scheme-icon {
-            font-size: 2.5rem;
-            background-color: var(--bg-primary);
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-        }
-
-        .scheme-title h3 {
-            color: var(--primary-dark);
-            font-size: 1.3rem;
-            margin-bottom: 5px;
-        }
-
-        .scheme-tag {
-            display: inline-block;
-            background-color: rgba(46, 204, 113, 0.1);
-            color: var(--primary-dark);
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
+        
+        .scheme-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.15); }
+        .scheme-card h3 { color: var(--text-main); font-size: 1.4rem; margin-bottom: 10px; }
+        .scheme-card p { color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; flex-grow: 1; font-size: 0.95rem; }
+        
+        .scheme-badge {
+            align-self: flex-start;
+            padding: 5px 12px;
+            background-color: rgba(52, 152, 219, 0.1);
+            color: #2980b9;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: bold;
+            margin-bottom: 15px;
         }
 
-        .scheme-body {
-            flex-grow: 1;
+        .benefit-box {
+            background-color: var(--bg-primary);
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            border-left: 3px solid var(--primary-color);
         }
-
-        .scheme-body h4 {
-            color: var(--text-main);
-            margin-bottom: 5px;
-            font-size: 1rem;
-        }
-
-        .scheme-body p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .scheme-body ul {
-            padding-left: 20px;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        .scheme-body li { margin-bottom: 5px; }
+        .benefit-box strong { color: var(--text-main); }
 
         .btn-apply {
-            display: block;
             text-align: center;
             background-color: var(--primary-color);
             color: white;
             text-decoration: none;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 10px;
+            border-radius: 6px;
             font-weight: bold;
             transition: var(--transition);
-            margin-top: auto;
+            width: 100%;
         }
-
         .btn-apply:hover { background-color: var(--primary-dark); }
-
-        /* Utility Class for Tabs */
-        .hidden { display: none !important; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
     </style>
 </head>
 <body>
 
     <header>
         <nav class="nav-container">
-            <a href="index.html" class="logo">🌱 AgroSystem</a>
+            <a href="index.html" class="logo">🌱 Azmith System</a>
             <button class="menu-toggle" id="menuToggle">
                 <span></span><span></span><span></span>
             </button>
@@ -233,12 +138,11 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="crops.html">Crops</a></li>
                 <li><a href="area-statistics.html">Area Stats</a></li>
-                <li><a href="farmingtips.html">Tips</a></li>
-                <li><a href="weather.html">Weather</a></li>
+                <li><a href="disease.html">Pest & Disease</a></li>
+                <li><a href="fertilizer.html">Fertilizers</a></li>
                 <li><a href="schemes.html" class="active">Schemes</a></li>
-                <li><button class="btn-theme" id="themeToggle">🌙 Dark Mode</button></li>
+                <li><button class="btn-theme" id="themeToggle">🌙 Mode</button></li>
                 
-                <!-- Navbar Translate Widget -->
                 <li style="display: flex; align-items: center;">
                     <div id="google_translate_element"></div>
                 </li>
@@ -246,204 +150,6 @@
         </nav>
     </header>
 
-    <section class="page-header">
-        <h1>Government Agricultural Schemes</h1>
-        <p>Discover financial aid, subsidies, and insurance policies designed to support and protect farmers.</p>
-    </section>
-
-    <section class="schemes-container">
-        
-        <div class="tabs-nav">
-            <button class="tab-btn active" data-target="all">All Schemes</button>
-            <button class="tab-btn" data-target="financial">Financial & Credit</button>
-            <button class="tab-btn" data-target="insurance">Crop Insurance</button>
-            <button class="tab-btn" data-target="infrastructure">Infrastructure & Resources</button>
-        </div>
-
-        <div class="schemes-grid" id="schemesGrid">
-            
-            <div class="scheme-card" data-category="financial">
-                <div class="scheme-header">
-                    <div class="scheme-icon">💰</div>
-                    <div class="scheme-title">
-                        <h3>PM-KISAN Yojana</h3>
-                        <span class="scheme-tag">Direct Income Support</span>
-                    </div>
-                </div>
-                <div class="scheme-body">
-                    <h4>Overview</h4>
-                    <p>Pradhan Mantri Kisan Samman Nidhi is a central sector scheme that provides income support to all landholding farmer families in the country.</p>
-                    <h4>Eligibility</h4>
-                    <ul>
-                        <li>All landholding farmer families.</li>
-                        <li>Must have a valid Aadhaar card and bank account.</li>
-                    </ul>
-                    <h4>Benefits</h4>
-                    <p>Financial benefit of ₹6,000 per year, released in three equal installments of ₹2,000 directly to bank accounts.</p>
-                </div>
-                <a href="https://pmkisan.gov.in/" target="_blank" class="btn-apply">Apply on PM-KISAN Portal →</a>
-            </div>
-
-            <div class="scheme-card" data-category="financial">
-                <div class="scheme-header">
-                    <div class="scheme-icon">💳</div>
-                    <div class="scheme-title">
-                        <h3>Kisan Credit Card (KCC)</h3>
-                        <span class="scheme-tag">Credit Facility</span>
-                    </div>
-                </div>
-                <div class="scheme-body">
-                    <h4>Overview</h4>
-                    <p>Provides farmers with timely access to adequate credit for agricultural expenses at heavily subsidized interest rates.</p>
-                    <h4>Eligibility</h4>
-                    <ul>
-                        <li>Individual farmers, joint borrowers, and tenant farmers.</li>
-                        <li>Self Help Groups (SHGs) or Joint Liability Groups (JLGs).</li>
-                    </ul>
-                    <h4>Benefits</h4>
-                    <p>Flexible loan repayment options, low interest rates (as low as 4% with prompt repayment), and simplified disbursement processes.</p>
-                </div>
-                <a href="https://www.myscheme.gov.in/schemes/kcc" target="_blank" class="btn-apply">View Details & Apply →</a>
-            </div>
-
-            <div class="scheme-card" data-category="financial">
-                <div class="scheme-header">
-                    <div class="scheme-icon">🌿</div>
-                    <div class="scheme-title">
-                        <h3>PKVY (Organic Farming)</h3>
-                        <span class="scheme-tag">Financial Assistance</span>
-                    </div>
-                </div>
-                <div class="scheme-body">
-                    <h4>Overview</h4>
-                    <p>Paramparagat Krishi Vikas Yojana aims to promote organic farming through cluster approach and Participatory Guarantee System (PGS) certification.</p>
-                    <h4>Eligibility</h4>
-                    <ul>
-                        <li>Farmers willing to adopt chemical-free organic farming.</li>
-                        <li>Groups of 50 or more farmers forming a cluster of 50 acres.</li>
-                    </ul>
-                    <h4>Benefits</h4>
-                    <p>Financial assistance of ₹50,000 per hectare for 3 years, covering seeds, bio-fertilizers, and harvesting logistics.</p>
-                </div>
-                <a href="https://pgsindia-ncof.gov.in/" target="_blank" class="btn-apply">Visit PGS India Portal →</a>
-            </div>
-
-            <div class="scheme-card" data-category="insurance">
-                <div class="scheme-header">
-                    <div class="scheme-icon">🛡️</div>
-                    <div class="scheme-title">
-                        <h3>PM Fasal Bima Yojana</h3>
-                        <span class="scheme-tag">Crop Insurance</span>
-                    </div>
-                </div>
-                <div class="scheme-body">
-                    <h4>Overview</h4>
-                    <p>A comprehensive crop insurance scheme designed to provide financial support to farmers suffering crop loss/damage arising out of unforeseen events.</p>
-                    <h4>Eligibility</h4>
-                    <ul>
-                        <li>Farmers growing notified crops in notified areas.</li>
-                        <li>Includes sharecroppers and tenant farmers.</li>
-                    </ul>
-                    <h4>Benefits</h4>
-                    <p>Extremely low premium rates (2% for Kharif, 1.5% for Rabi crops). Full insured amount paid against crop failures due to natural calamities.</p>
-                </div>
-                <a href="https://pmfby.gov.in/" target="_blank" class="btn-apply">Apply on PMFBY Portal →</a>
-            </div>
-
-            <div class="scheme-card" data-category="infrastructure">
-                <div class="scheme-header">
-                    <div class="scheme-icon">☀️</div>
-                    <div class="scheme-title">
-                        <h3>PM KUSUM Yojana</h3>
-                        <span class="scheme-tag">Solar Energy</span>
-                    </div>
-                </div>
-                <div class="scheme-body">
-                    <h4>Overview</h4>
-                    <p>Aims to provide energy and water security to farmers by setting up standalone solar pumps and solarizing grid-connected agriculture pumps.</p>
-                    <h4>Eligibility</h4>
-                    <ul>
-                        <li>Individual farmers, Water User Associations, and FPOs.</li>
-                    </ul>
-                    <h4>Benefits</h4>
-                    <p>Up to 60% subsidy on the cost of standalone solar pumps. Farmers can also sell surplus solar power back to the grid for extra income.</p>
-                </div>
-                <a href="https://pmkusum.mnre.gov.in/" target="_blank" class="btn-apply">Apply on PM KUSUM Portal →</a>
-            </div>
-
-            <div class="scheme-card" data-category="infrastructure">
-                <div class="scheme-header">
-                    <div class="scheme-icon">📱</div>
-                    <div class="scheme-title">
-                        <h3>National Agri Market (e-NAM)</h3>
-                        <span class="scheme-tag">Digital Market</span>
-                    </div>
-                </div>
-                <div class="scheme-body">
-                    <h4>Overview</h4>
-                    <p>Pan-India electronic trading portal which networks existing APMC mandis to create a unified national market for agricultural commodities.</p>
-                    <h4>Eligibility</h4>
-                    <ul>
-                        <li>Any registered farmer, trader, or FPO.</li>
-                    </ul>
-                    <h4>Benefits</h4>
-                    <p>Provides better price discovery through transparent auction processes and gives access to a wider market beyond local mandis.</p>
-                </div>
-                <a href="https://enam.gov.in/" target="_blank" class="btn-apply">Register on e-NAM →</a>
-            </div>
-
-            <div class="scheme-card" data-category="infrastructure">
-                <div class="scheme-header">
-                    <div class="scheme-icon">🧪</div>
-                    <div class="scheme-title">
-                        <h3>Soil Health Card Scheme</h3>
-                        <span class="scheme-tag">Resource Management</span>
-                    </div>
-                </div>
-                <div class="scheme-body">
-                    <h4>Overview</h4>
-                    <p>Provides farmers with soil nutrient status of their holdings and advises them on the dosage of fertilizers to maintain soil health.</p>
-                    <h4>Eligibility</h4>
-                    <ul>
-                        <li>All farmers in India are eligible to get their soil tested.</li>
-                    </ul>
-                    <h4>Benefits</h4>
-                    <p>Helps in reducing the cost of cultivation by optimizing fertilizer application. Promotes sustainable farming and higher yields.</p>
-                </div>
-                <a href="https://soilhealth.dac.gov.in/" target="_blank" class="btn-apply">Check Soil Health Portal →</a>
-            </div>
-
-            <div class="scheme-card" data-category="infrastructure">
-                <div class="scheme-header">
-                    <div class="scheme-icon">💧</div>
-                    <div class="scheme-title">
-                        <h3>PM Krishi Sinchayee Yojana</h3>
-                        <span class="scheme-tag">Irrigation Support</span>
-                    </div>
-                </div>
-                <div class="scheme-body">
-                    <h4>Overview</h4>
-                    <p>Aims to improve farm water use efficiency and expand cultivable area under assured irrigation ("Har Khet Ko Pani").</p>
-                    <h4>Eligibility</h4>
-                    <ul>
-                        <li>Farmers owning agricultural land.</li>
-                        <li>Preference given to small and marginal farmers.</li>
-                    </ul>
-                    <h4>Benefits</h4>
-                    <p>Heavy subsidies on installing micro-irrigation systems (Drip and Sprinkler systems) to maximize water conservation.</p>
-                </div>
-                <a href="https://pmksy.gov.in/" target="_blank" class="btn-apply">Explore PMKSY Portal →</a>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- VIROXA Brand Footer -->
-    <footer>
-        <p>&copy; 2026 Daily Farming Management System. Designed by <span class="designer-highlight">"VIROXA"</span></p>
-    </footer>
-
-    <!-- Translate Script -->
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
@@ -455,37 +161,99 @@
     </script>
     <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
+    <section class="page-header">
+        <h1>Government Schemes (Sarkari Yojanayein)</h1>
+        <p>Explore subsidies, financial support, and agricultural schemes provided by the government for farmer welfare.</p>
+    </section>
+
+    <section class="section-container">
+        <div class="scheme-grid">
+
+            <!-- Scheme 1 -->
+            <div class="scheme-card">
+                <span class="scheme-badge">Financial Support</span>
+                <h3>PM-KISAN Samman Nidhi</h3>
+                <p>An initiative by the Government of India in which all farmers will get up to ₹6,000 per year as minimum income support.</p>
+                <div class="benefit-box">
+                    <strong>Benefit:</strong> ₹6,000/year directly to bank account in 3 equal installments.
+                </div>
+                <a href="https://pmkisan.gov.in/" target="_blank" class="btn-apply">Official Website ↗</a>
+            </div>
+
+            <!-- Scheme 2 -->
+            <div class="scheme-card">
+                <span class="scheme-badge">Insurance</span>
+                <h3>PM Fasal Bima Yojana (PMFBY)</h3>
+                <p>Provides a comprehensive insurance cover against failure of the crop thus helping in stabilising the income of the farmers.</p>
+                <div class="benefit-box">
+                    <strong>Benefit:</strong> Extremely low premium (1.5% - 2%) for maximum crop loss coverage due to natural calamities.
+                </div>
+                <a href="https://pmfby.gov.in/" target="_blank" class="btn-apply">Official Website ↗</a>
+            </div>
+
+            <!-- Scheme 3 -->
+            <div class="scheme-card">
+                <span class="scheme-badge">Credit / Loan</span>
+                <h3>Kisan Credit Card (KCC)</h3>
+                <p>Aims to provide adequate and timely credit support from the banking system to the farmers for their cultivation and agricultural needs.</p>
+                <div class="benefit-box">
+                    <strong>Benefit:</strong> Short-term loans at a very low interest rate of 4% (on prompt repayment).
+                </div>
+                <a href="https://sbi.co.in/web/agri-rural/agriculture-banking/crop-loan/kisan-credit-card" target="_blank" class="btn-apply">More Info ↗</a>
+            </div>
+
+            <!-- Scheme 4 -->
+            <div class="scheme-card">
+                <span class="scheme-badge">Equipment / Power</span>
+                <h3>PM-KUSUM Yojana</h3>
+                <p>Focuses on ensuring energy security for farmers in India, along with honoring India's commitment to increase the share of installed capacity of electric power.</p>
+                <div class="benefit-box">
+                    <strong>Benefit:</strong> Up to 60% subsidy for setting up solar agriculture pumps and grid-connected solar power plants.
+                </div>
+                <a href="https://pmkusum.mnre.gov.in/" target="_blank" class="btn-apply">Official Website ↗</a>
+            </div>
+
+            <!-- Scheme 5 -->
+            <div class="scheme-card">
+                <span class="scheme-badge">Soil Health</span>
+                <h3>Soil Health Card Scheme</h3>
+                <p>The scheme aims at promoting soil test based and balanced use of fertilisers to enable farmers to realize higher yields at lower cost.</p>
+                <div class="benefit-box">
+                    <strong>Benefit:</strong> Free soil testing and a personalized report detailing required nutrients (NPK) for your specific field.
+                </div>
+                <a href="https://soilhealth.dac.gov.in/" target="_blank" class="btn-apply">Official Website ↗</a>
+            </div>
+
+            <!-- Scheme 6 -->
+            <div class="scheme-card">
+                <span class="scheme-badge">Organic Farming</span>
+                <h3>Paramparagat Krishi Vikas (PKVY)</h3>
+                <p>An elaborated component of Soil Health Management (SHM) of major project National Mission of Sustainable Agriculture (NMSA).</p>
+                <div class="benefit-box">
+                    <strong>Benefit:</strong> Financial assistance of ₹50,000 per hectare for 3 years to adopt organic farming and certification.
+                </div>
+                <a href="https://pgsindia-ncof.gov.in/pkvy/index.aspx" target="_blank" class="btn-apply">Official Website ↗</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- VIROXA Brand Footer -->
+    <footer>
+        <p>&copy; 2026 Farming Management System. Designed by <span class="designer-highlight">"Azmith"</span></p>
+    </footer>
+
     <script src="js/script.js"></script>
-    
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            const schemeCards = document.querySelectorAll('.scheme-card');
-
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    // 1. Remove active state from all tabs
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    
-                    // 2. Add active state to clicked tab
-                    btn.classList.add('active');
-
-                    // 3. Get target category
-                    const targetCategory = btn.getAttribute('data-target');
-
-                    // 4. Filter Cards
-                    schemeCards.forEach(card => {
-                        const cardCategory = card.getAttribute('data-category');
-                        
-                        if (targetCategory === 'all' || targetCategory === cardCategory) {
-                            card.classList.remove('hidden');
-                        } else {
-                            card.classList.add('hidden');
-                        }
-                    });
-                });
-            });
-        });
+        // Google Translate Nuke Fallback
+        setInterval(function() {
+            document.body.style.top = "0px";
+            let googleBanner = document.querySelector('.skiptranslate iframe');
+            if(googleBanner) {
+                googleBanner.style.display = 'none';
+                googleBanner.style.visibility = 'hidden';
+            }
+        }, 500);
     </script>
 </body>
 </html>

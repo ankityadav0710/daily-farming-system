@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
        1. Configuration & DOM Elements
        ========================================================================== */
     // Replace this with your actual OpenWeatherMap API key for live data
-    const API_KEY = "YOUR_API_KEY_HERE"; 
+    const API_KEY = "cbc81278eb69976933f72fe6cf6fdd67"; 
 
     // Inputs & Status
     const cityInput = document.getElementById("cityInput");
